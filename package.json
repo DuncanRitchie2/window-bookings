@@ -4,7 +4,9 @@
   "description": "Bookings system for a window-repair company. My apprenticeship project for Information Catalyst under the tutelage of Code Nation.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js && cd client && npm start",
+    "heroku-postbuild": "npm i && cd client && npm i"
   },
   "repository": {
     "type": "git",
