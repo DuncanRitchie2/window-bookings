@@ -1,0 +1,31 @@
+{
+  "name": "window-bookings",
+  "version": "1.0.0",
+  "description": "Bookings system for a window-repair company. My apprenticeship project for Information Catalyst under the tutelage of Code Nation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DuncanRitchie2/window-bookings.git"
+  },
+  "keywords": [
+    "JWS",
+    "windows",
+    "repair",
+    "bookings",
+    "booking",
+    "ICE",
+    "Information",
+    "Catalyst",
+    "fullstack",
+    "schedule"
+  ],
+  "author": "Duncan Ritchie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DuncanRitchie2/window-bookings/issues"
+  },
+  "homepage": "https://github.com/DuncanRitchie2/window-bookings#readme"
+}
