@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/DuncanRitchie2/window-bookings/issues"
   },
-  "homepage": "https://github.com/DuncanRitchie2/window-bookings#readme"
+  "homepage": "https://github.com/DuncanRitchie2/window-bookings#readme",
+  "dependencies": {
+    "heroku": "^7.33.1"
+  }
 }
