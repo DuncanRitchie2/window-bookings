@@ -2,7 +2,7 @@
 -- -- 📚 INITIALISE DATABASE 📚
 -- --
 
-drop database window_bookings;
+-- drop database window_bookings;
 create database window_bookings;
 use window_bookings;
 
@@ -78,15 +78,18 @@ create table premises(
 insert into premises(houseNumber, street, town, country, postCode, latitude, longitude, style) values
 	(10, "Downing Street", "London", "UK", "SW1A 2AA", 51.5033, -0.1275, "Georgian"),
 	(1400, "Pennsylvania Avenue", "Washington DC", "US", "DC 20004", 38.8977, -77.0365, "Neo-classical"),
-    (1, "Platz der Republik", "Berlin", "Germany", "11011", 52.5186, 13.3761, "Neo-baroque"),
-	(2, "Leodis Way", "Leeds", "UK", "LS99 2BD", 53.7318, -0.4144, "Warehouse"),
-	(3, "Burcott Garth", "Hull", "UK", "HU4 7LG", 53.7657, -1.5005, "Terrace"),
-    (8, "Holly Tree Walk", "Tadcaster", "UK", "LS24 9HT", 53.8755, -1.2762, "Terrace"),
-    (3, "Tamar Close", "Bere Alston", "UK", "PL20 7HF", 50.4789, -4.1924, "Semi-detached")
+    (1, "Platz der Republik", "Berlin", "Germany", "11011", 52.5186, 13.3761, "Neo-baroque")
 ;
 insert into premises(houseName, street, town, country, postCode, latitude, longitude, style) values
-	("Scottish Parliament","Holyrood Road","Edinburgh","UK","EH99 1SP", 55.9519, -3.1751, "Post-modern")
+	("Scottish Parliament", "Holyrood Road", "Edinburgh", "UK", "EH99 1SP", 55.9519, -3.1751, "Post-modern"),
+    ("Senedd", "Pierhead Street", "Cardiff", "UK", "CF99 1NA", 51.4639, -3.1621, "Late modern")
 ;
+-- insert into premises(houseNumber, street, town, country, postCode, latitude, longitude, style) values
+-- 	(2, "Leodis Way", "Leeds", "UK", "LS99 2BD", 53.7318, -0.4144, "Warehouse"),
+-- 	(3, "Burcott Garth", "Hull", "UK", "HU4 7LG", 53.7657, -1.5005, "Terrace"),
+--     (8, "Holly Tree Walk", "Tadcaster", "UK", "LS24 9HT", 53.8755, -1.2762, "Terrace"),
+--     (3, "Tamar Close", "Bere Alston", "UK", "PL20 7HF", 50.4789, -4.1924, "Semi-detached")
+-- ;
 -- select * from premises;
 
 
@@ -107,13 +110,13 @@ create table surveys(
 	foreign key (premises_id) references premises(id)
 );
 insert into surveys(customer_id, surveyor_id, premises_id, dateToHappen) values
-	(1, 4, 4, "2019-11-08 12:00:00"),
+	(10, 4, 4, "2019-11-08 12:00:00"),
 	(7, 3, 1, "2019-11-01 15:20:00"),
 	(4, 2, 2, "2019-10-10 17:15:00"),
 	(11, 2, 3, "2019-10-09 06:30:00")
 ;
 -- select * from surveys;
--- select firstName, lastName, emailAddress, houseNumber, street, town, country, postCode from surveys join premises on surveys.premises_id = premises.id join customers on surveys.customer_id = customers.id;
+-- select customers.firstName, customers.lastName, customers.emailAddress, surveyors.firstName, surveyors.lastName, surveyors.emailAddress, houseName, houseNumber, street, town, country, postCode, dateToHappen from surveys join premises on surveys.premises_id = premises.id join customers on surveys.customer_id = customers.id join surveyors on surveys.surveyor_id = surveyors.id;
 
 
 -- --
