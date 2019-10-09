@@ -2,7 +2,7 @@
 -- -- 📚 INITIALISE DATABASE 📚
 -- --
 
--- drop database window_bookings;
+drop database window_bookings;
 create database window_bookings;
 use window_bookings;
 
@@ -72,15 +72,16 @@ create table premises(
     postCode varchar(10),
     latitude float,
     longitude float,
+    style varchar(255),
 	id int primary key auto_increment not null unique
 );
-insert into premises(houseNumber, street, town, country, postCode, latitude, longitude) values
-	(10,"Downing Street","London","UK","SW1A 2AA", 51.5033, -0.1275),
-	(1400,"Pennsylvania Avenue","Washington DC","US","DC 20004", 38.8977, -77.0365),
-    (1, "Platz der Republik", "Berlin", "Germany", "11011", 52.5186, 13.3761),
-	(2,"Random Place","Randomtown","UK","LS99 2BD", 53.7657, -1.5005);
-insert into premises(houseName, street, town, country, postCode, latitude, longitude) values
-	("Scottish Parliament","Holyrood Road","Edinburgh","UK","EH99 1SP", 55.9519, -3.1751)
+insert into premises(houseNumber, street, town, country, postCode, latitude, longitude, style) values
+	(10,"Downing Street","London","UK","SW1A 2AA", 51.5033, -0.1275, "Georgian"),
+	(1400,"Pennsylvania Avenue","Washington DC","US","DC 20004", 38.8977, -77.0365, "Neo-classical"),
+    (1, "Platz der Republik", "Berlin", "Germany", "11011", 52.5186, 13.3761, "Neo-baroque"),
+	(2,"Leodis Way","Leeds","UK","LS99 2BD", 53.7657, -1.5005, "Warehouse");
+insert into premises(houseName, street, town, country, postCode, latitude, longitude, style) values
+	("Scottish Parliament","Holyrood Road","Edinburgh","UK","EH99 1SP", 55.9519, -3.1751, "Post-modern")
 ;
 -- select * from premises;
 
