@@ -76,10 +76,14 @@ create table premises(
 	id int primary key auto_increment not null unique
 );
 insert into premises(houseNumber, street, town, country, postCode, latitude, longitude, style) values
-	(10,"Downing Street","London","UK","SW1A 2AA", 51.5033, -0.1275, "Georgian"),
-	(1400,"Pennsylvania Avenue","Washington DC","US","DC 20004", 38.8977, -77.0365, "Neo-classical"),
+	(10, "Downing Street", "London", "UK", "SW1A 2AA", 51.5033, -0.1275, "Georgian"),
+	(1400, "Pennsylvania Avenue", "Washington DC", "US", "DC 20004", 38.8977, -77.0365, "Neo-classical"),
     (1, "Platz der Republik", "Berlin", "Germany", "11011", 52.5186, 13.3761, "Neo-baroque"),
-	(2,"Leodis Way","Leeds","UK","LS99 2BD", 53.7657, -1.5005, "Warehouse");
+	(2, "Leodis Way", "Leeds", "UK", "LS99 2BD", 53.7318, -0.4144, "Warehouse"),
+	(3, "Burcott Garth", "Hull", "UK", "HU4 7LG", 53.7657, -1.5005, "Terrace"),
+    (8, "Holly Tree Walk", "Tadcaster", "UK", "LS24 9HT", 53.8755, -1.2762, "Terrace"),
+    (3, "Tamar Close", "Bere Alston", "UK", "PL20 7HF", 50.4789, -4.1924, "Semi-detached")
+;
 insert into premises(houseName, street, town, country, postCode, latitude, longitude, style) values
 	("Scottish Parliament","Holyrood Road","Edinburgh","UK","EH99 1SP", 55.9519, -3.1751, "Post-modern")
 ;
