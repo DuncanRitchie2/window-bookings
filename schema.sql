@@ -2,7 +2,7 @@
 -- -- 📚 INITIALISE DATABASE 📚
 -- --
 
--- drop database window_bookings;
+drop database window_bookings;
 create database window_bookings;
 use window_bookings;
 
@@ -46,14 +46,17 @@ create table surveyors(
     lastName varchar(100),
     phoneNumber varchar(13),
     emailAddress varchar(255) unique,
+    lastLatitude float,
+    lastLongitude float,
     dateJoined datetime default current_timestamp,
     id int primary key auto_increment not null unique
 );
-insert into surveyors(firstName, lastName, phoneNumber, emailAddress) values
-	("Beyonce","Knowles","0101244000001","queenbey@duncanritchie.co.uk"),
-	("Sam","Smith","4401244000002","samsmith@duncanritchie.co.uk"),
-	("Declan","McKenna","4401244000003","declan-mckenna@duncanritchie.co.uk"),
-	("Camila","Cabello","0101244000004","camila.cabello@duncanritchie.co.uk")
+insert into surveyors(firstName, lastName, phoneNumber, emailAddress, lastLatitude, lastLongitude) values
+	("Beyonce","Knowles","0101244000001","queenbey@duncanritchie.co.uk", 34.0833, -118.4478),
+	("Sam","Smith","4401244000002","samsmith@duncanritchie.co.uk", 51.4730, -0.3050),
+	("Declan","McKenna","4401244000003","declan-mckenna@duncanritchie.co.uk", 12.8163, 45.0025),
+	("Camila","Cabello","0101244000004","camila.cabello@duncanritchie.co.uk", 23.1508, -82.3560),
+	("George","Ezra","4401244000005","ezra@duncanritchie.co.uk", 47.4908, 19.0490)
 ;
 -- select * from surveyors;
 
@@ -103,20 +106,22 @@ create table surveys(
     surveyor_id int,
     premises_id int,
     id int primary key auto_increment not null unique,
+    status varchar(20),
     dateToHappen datetime,
     dateBooked datetime default current_timestamp,
 	foreign key (customer_id) references customers(id),
 	foreign key (surveyor_id) references surveyors(id),
 	foreign key (premises_id) references premises(id)
 );
-insert into surveys(customer_id, surveyor_id, premises_id, dateToHappen) values
-	(10, 4, 4, "2019-11-08 12:00:00"),
-	(7, 3, 1, "2019-11-01 15:20:00"),
-	(4, 2, 2, "2019-10-10 17:15:00"),
-	(11, 2, 3, "2019-10-09 06:30:00")
+insert into surveys(customer_id, surveyor_id, premises_id, status, dateToHappen) values
+	(5, 2, 1, "complete", "2019-09-16 14:30:00"),
+	(7, 3, 1, "complete", "2019-10-01 06:30:00"),
+	(9, 3, 4, "happening", "2019-10-10 09:00:00"),
+	(4, 4, 2, "surveyor en route", "2019-10-10 16:30:00"),
+	(11, 2, 3, "pending", "2019-10-14 11:30:00")
 ;
 -- select * from surveys;
--- select customers.firstName, customers.lastName, customers.emailAddress, surveyors.firstName, surveyors.lastName, surveyors.emailAddress, houseName, houseNumber, street, town, country, postCode, dateToHappen from surveys join premises on surveys.premises_id = premises.id join customers on surveys.customer_id = customers.id join surveyors on surveys.surveyor_id = surveyors.id;
+-- select status, dateToHappen, customers.firstName, customers.lastName, customers.emailAddress, surveyors.firstName, surveyors.lastName, surveyors.emailAddress, houseName, houseNumber, street, town, country, postCode from surveys join premises on surveys.premises_id = premises.id join customers on surveys.customer_id = customers.id join surveyors on surveys.surveyor_id = surveyors.id order by dateToHappen;
 
 
 -- --
@@ -163,4 +168,4 @@ insert into photos(survey_id, window_id, url) values
 -- -- 📖 JOIN ALL TABLES! 📖
 -- --
 
--- select * from photos join surveys on surveys.id = photos.survey_id join windows on windows.id = photos.window_id join premises on premises.id = windows.premises_id join customers on customers.id = surveys.customer_id join surveyors on surveyors.id = surveys.surveyor_id;
+select * from photos join surveys on surveys.id = photos.survey_id join windows on windows.id = photos.window_id join premises on premises.id = windows.premises_id join customers on customers.id = surveys.customer_id join surveyors on surveyors.id = surveys.surveyor_id;
