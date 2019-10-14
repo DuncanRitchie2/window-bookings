@@ -42,21 +42,19 @@ const promisifiedQuery = promisify(connection.query).bind(connection)
 
 
 // Retrieve all the customer's surveys.
-const readCustomersSurveys = async (user_id) => {
+const readCustomersSurveys = async (customer_id) => {
     try {
-
         // This is used after adding, editing or deleting a survey
         // Should read all surveys of the user from sql and 
         // send the entire list to client
 
         //Mysql Query
-        const queryString = `SELECT surveys.id, premises_id, date_due FROM surveys JOIN customers ON customers.id=surveys.user_id WHERE customer_id=${user_id};`
+        const queryString = `SELECT surveys.id, premises_id, date_due FROM surveys JOIN customers ON customers.id=surveys.user_id WHERE customer_id=${customer_id};`
         let data = await promisifiedQuery(queryString)
 
         console.log('read Survey SQL query')
         console.log(data)
         return(data) // returns an array of objects.
-
 
     } catch (error) {
         console.log('readSurvey error')
@@ -70,7 +68,6 @@ const readCustomersSurveys = async (user_id) => {
 // Retrieve all the surveyor's surveys.
 const readSurveyorsSurveys = async (surveyor_id) => {
     try {
-
         // This is used after adding, editing or deleting a survey
         // Should read all surveys of the user from sql and 
         // send the entire list to client
@@ -82,7 +79,6 @@ const readSurveyorsSurveys = async (surveyor_id) => {
         console.log('read Survey SQL query')
         console.log(data)
         return(data) // returns an array of objects.
-
 
     } catch (error) {
         console.log('readSurvey error')
@@ -130,7 +126,6 @@ const isCustomerRegistered = async (usernameGiven) => {
 // Add a survey
 const addSurvey = async (survey) => {
     try {
-        // addSurvey = {"customer_id": 3, "reminder": "adding a test reminder ********", "date_added": "2019-10-04"}
         let { customer_id, premises_id, date_booked } = survey
         // MySql Query
         const queryString = `INSERT INTO surveys(customer_id,premises_id,date_booked) VALUES ('${customer_id}','${premises_id}','${date_booked}');`
@@ -202,7 +197,6 @@ const editSurvey = async (survey) => {
 // Delete a survey
 const deleteSurvey = async (survey) => {
     try {
-
         let { user_id, survey_id } = survey
 
         // MySql Query
@@ -210,11 +204,11 @@ const deleteSurvey = async (survey) => {
         const queryString = `DELETE FROM surveys WHERE id=${survey_id} && user_id=${user_id};`
         let data = await promisifiedQuery(queryString)
         
-        console.log('delete reminder via SQL query')
+        console.log('delete survey via SQL query')
         console.log(data)
 
     } catch (error) {
-        console.log('delete reminder error')
+        console.log('delete survey error')
         console.log(error.sqlMessage)
     }
 
