@@ -18,7 +18,7 @@
     color: white;
 }
 
-.book-a-survey-button {
+.book-a-survey-link {
     width: 50vw;
     font-size: calc(18px + 6vmin);
     font-family: inherit;
