@@ -1,4 +1,5 @@
 import React from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
 
 function App() {
@@ -6,18 +7,31 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h2>Window bookings</h2>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      <Router>
+        <Switch>
+          <Route path="/book">
+          {/* Component for a new survey */}
+          </Route>
+          <Route path="/view">
+          {/* Component for listing all surveys */}
+          </Route>
+          <Route path="/surveyor">
+          {/* Component for the surveyor's schedule */}
+          </Route>
+          <Route path="/">
+            <button className="book-a-survey-button">Book a survey</button>
+          {/* Home component */}
+          </Route>
+        </Switch>
+      </Router>
+      <footer>
+        <ul>
+            <li>
+                Made by Duncan Ritchie
+            </li>
+        </ul>
+      </footer>
     </div>
   );
 }

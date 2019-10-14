@@ -1,22 +1,36 @@
-.App {
-  text-align: center;
-}
+@import url('https://fonts.googleapis.com/css?family=Alegreya&display=swap');
 
-.App-logo {
-  height: 40vmin;
+.App {
+    text-align: center;
+    font-family: 'Alegreya', serif;
+    --black: #282c34;
+    --pale-blue: #c4ccdd;
+    color: --black;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+.book-a-survey-button {
+    width: 50vw;
+    font-size: calc(18px + 6vmin);
+    font-family: inherit;
+    border: 0;
+}
+
+
+footer {
+    background-color: var(--pale-blue);
+}
+
+footer ul {
+    list-style-type: none;
+    padding: 12px 0;
 }

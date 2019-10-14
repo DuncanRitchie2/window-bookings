@@ -173,7 +173,6 @@ const addCustomer = async (customer) => {
 const editSurvey = async (survey) => {
 
     try {
-
         let { premises_id, date_due, survey_id, customer_id } = survey
 
         // Mysql Query
