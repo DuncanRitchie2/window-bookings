@@ -18,12 +18,6 @@ class Book extends Component {
     }
 
     componentDidMount() {
-        const inputKeys = ["firstName", "lastName", "propertyAddress", "propertyTown", "surveyDate", "surveyTime"]
-        let inputValues = {}
-        for (let i = 0; i < inputKeys.length; i++) {
-            inputValues[inputKeys[i]] = ""
-        }
-        this.setState({inputValues: inputValues})
     }
 
     updateInputValue(e) {
@@ -40,6 +34,19 @@ class Book extends Component {
         if (inputValues.firstName && inputValues.lastName && inputValues.propertyAddress && inputValues.propertyTown && inputValues.surveyDate && inputValues.surveyTime) {
             alert("Thank you for placing your booking!")
             // Insert code here for sending data to backend.
+
+            this.setState({
+                inputValues: {
+                    firstName: "",
+                    lastName: "",
+                    propertyAddress: "",
+                    propertyTown: "",
+                    surveyDate: "",
+                    surveyTime: ""
+                }
+            })
+
+            window.location.pathname = "/list"
         }
         else {
             alert("Please fill in all values.")

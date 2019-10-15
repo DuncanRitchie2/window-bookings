@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Alegreya&display=swap');
 
+html,body {
+    height: 100%;
+}
+
 .App {
     text-align: center;
     font-family: 'Alegreya', serif;
     --black: #282c34;
+    --very-pale-blue: #d8dff0;
     --pale-blue: #c4ccdd;
+    --deep-blue: #273f74;
+    --white: #edf1fc;
     color: --black;
     display: flex;
     flex-direction: column;
@@ -75,16 +82,46 @@ td {
 }
 
 nav {
-    margin-top: 18px;
+    margin-top: 36px;
     display: flex;
     background-color: var(--pale-blue);
     width: 100%;
+    position: fixed;
+    bottom: 0;
 }
 
 nav ul {
     list-style-type: none;
-    padding: 0px 0;
+    padding: 12px 0;
+    margin: 0;
     display: flex;
     width: 100%;
     justify-content: space-evenly;
+}
+
+nav a {
+    padding: 15px;
+    border: 3px solid rgba(0,0,0,0);
+    border-bottom: none;
+    transition: background-color 1s, border-color 0.3s;
+}
+
+.nav-link-current {
+    text-decoration: none;
+    background-color: var(--very-pale-blue);
+    border-radius: 6px 6px 0 0;
+    border: 3px solid var(--pale-blue);
+    border-bottom: none;
+    padding-top: 15px;
+    padding-bottom: 12px;
+}
+
+nav a:hover,.nav-link-current:hover {
+    background-color: var(--white);
+    border-radius: 6px 6px 0 0;
+    /* border: 3px solid var(--pale-blue); */
+    border-bottom: none;
+    padding-top: 15px;
+    padding-bottom: 12px;
+    color: var(--deep-blue);
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, NavLink} from 'react-router-dom';
 import Home from './components/Home/Home';
 import Book from './components/Book/Book';
 import CustomersList from './components/CustomersList/CustomersList';
@@ -17,7 +17,7 @@ function App() {
             
             <Switch>
                 <Route path="/book" component={Book}></Route>
-                <Route path="/view" component={CustomersList}></Route>
+                <Route path="/list" component={CustomersList}></Route>
                 <Route path="/surveyor" component={SurveyorsList}></Route>
                 <Route path="/" exact component={Home}></Route>
                 <Route component={FourOFour}></Route>
@@ -26,16 +26,16 @@ function App() {
             <nav>
                 <ul>
                     <li>
-                        <Link to="/" title="Home">Home</Link>
+                        <NavLink to="/" exact activeClassName="nav-link-current" title="Home">Home</NavLink>
                     </li>
                     <li>
-                        <Link to="/book" title="Book a survey">Book a survey</Link>
+                        <NavLink to="/book" exact activeClassName="nav-link-current" title="Book a survey">Book a survey</NavLink>
                     </li>
                     <li>
-                        <Link to="/view" title="List surveys you&rsquo;ve booked">List surveys you&rsquo;ve booked</Link>
+                        <NavLink to="/list" exact activeClassName="nav-link-current" title="List surveys you&rsquo;ve booked">List surveys you&rsquo;ve booked</NavLink>
                     </li>
                     <li>
-                        <Link to="/surveyor" title="Surveyor&rsquo;s view">Surveyor view</Link>
+                        <NavLink to="/surveyor" exact activeClassName="nav-link-current" title="Surveyor&rsquo;s view">Surveyor view</NavLink>
                     </li>
                 </ul>
             </nav>

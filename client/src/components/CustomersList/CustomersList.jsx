@@ -19,7 +19,7 @@ class CustomersList extends Component {
     render() {
         let surveys = this.state.surveys.map((survey, i)=>{
             return (
-                <tr>
+                <tr key={i}>
                     <td>{survey.date}</td>
                     <td>{survey.property}</td>
                     <td>{survey.surveyor}</td>
