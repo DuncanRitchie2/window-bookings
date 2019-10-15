@@ -118,7 +118,8 @@ insert into surveys(customer_id, surveyor_id, premises_id, status, dateToHappen)
 	(7, 3, 1, "complete", "2019-10-01 06:30:00"),
 	(9, 3, 4, "happening", "2019-10-10 09:00:00"),
 	(4, 4, 2, "surveyor en route", "2019-10-10 16:30:00"),
-	(11, 2, 3, "pending", "2019-10-14 11:30:00")
+	(11, 2, 3, "pending", "2019-10-14 11:30:00"),
+	(4, 5, 2, "pending", "2019-10-24 17:00:00")
 ;
 -- select * from surveys;
 -- select status, dateToHappen, customers.firstName, customers.lastName, customers.emailAddress, surveyors.firstName, surveyors.lastName, surveyors.emailAddress, houseName, houseNumber, street, town, country, postCode from surveys join premises on surveys.premises_id = premises.id join customers on surveys.customer_id = customers.id join surveyors on surveys.surveyor_id = surveyors.id order by dateToHappen;

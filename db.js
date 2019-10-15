@@ -49,7 +49,7 @@ const readCustomersSurveys = async (customer_id) => {
         // send the entire list to client
 
         //Mysql Query
-        const queryString = `SELECT surveys.id, premises_id, date_due FROM surveys JOIN customers ON customers.id=surveys.user_id WHERE customer_id=${customer_id};`
+        const queryString = `SELECT surveys.id, surveyor_id, premises_id, dateToHappen FROM surveys JOIN customers ON customers.id=surveys.customer_id WHERE customer_id=${customer_id};`
         let data = await promisifiedQuery(queryString)
 
         console.log('read Survey SQL query')
@@ -91,27 +91,24 @@ const readSurveyorsSurveys = async (surveyor_id) => {
 
 // Check if the customer is actually signed-up
 
-const isCustomerRegistered = async (usernameGiven) => {
-    console.log("Testing whether "+usernameGiven+" is registered")
+const isCustomerRegistered = async (firstNameGiven, lastNameGiven) => {
+    console.log("Testing whether "+firstNameGiven+" "+lastNameGiven+" is registered")
     
     try {
         //MySql Query
-        const queryString = `SELECT id FROM customers WHERE customer='${usernameGiven}';`
+        const queryString = `SELECT id FROM customers WHERE firstName='${firstNameGiven}' && lastName='${lastNameGiven}';`
         
         let data = await promisifiedQuery(queryString)
 
-        console.log(`is ${usernameGiven} Registered SQL query`)
-        console.log(data[0])
-
         if(data[0] !== undefined){
-            console.log(`user ${usernameGiven} given exists in database`)
-            console.log(data[0].id)
+            console.log(`Customer ${firstNameGiven} ${lastNameGiven} exists in database`)
+            console.log("The customer_id is "+data[0].id)
             return data[0].id
         }
         else{
-            console.log("user doesn't exist in database, client needs to ask to register")
-            console.log(false)
-            return false
+            console.log(`Customer ${firstNameGiven} ${lastNameGiven} doesn't exist in database, client needs to ask to register`)
+            console.log("The customer_id is null")
+            return null
         }
 
     } catch (error) {
@@ -158,7 +155,6 @@ const addCustomer = async (customer) => {
         console.log('Add customer via SQL query')
         console.log(data)
         return(data.message || "Added new customer ok")
-
 
     } catch (error) {
         console.log('Add customer error')
@@ -221,7 +217,7 @@ module.exports = {
     readSurveyorsSurveys,
     isCustomerRegistered,
     addSurvey,
-    addUser,
+    addCustomer,
     editSurvey,
     deleteSurvey
 }

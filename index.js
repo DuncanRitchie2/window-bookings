@@ -6,7 +6,7 @@ const path = require('path')
 const port = process.env.PORT || 3019;
 
 // Require methods from app.js.
-const { readSurveys, isUserRegistered, addSurvey, addUser, editSurvey, deleteSurvey } = require('./db')
+const { readCustomersSurveys, readSurveyorsSurveys, isCustomerRegistered, addSurvey, addCustomer, editSurvey, deleteSurvey } = require('./db')
 
 
 // Define the path where the public files are, as built by React.
@@ -26,10 +26,20 @@ server.use(bodyParser.json())
 // });
 
 
-// GET   /readsurveys
-server.get("/readsurveys", async (req,res) => {
+// GET   /readcustomerssurveys
+server.get("/readcustomerssurveys", async (req,res) => {
+    console.log("Hello from /readcustomerssurveys!")
+    const data = await readCustomersSurveys(req.query.id) 
+    res.send(data)
+
+})
+
+
+// GET   /readsurveyorssurveys
+server.get("/readsurveyorssurveys", async (req,res) => {
+    console.log("Hello from /readsurveyorssurveys!")
     console.log(req.body)
-    const data = await readSurveys(req.query.user_id)
+    const data = await readSurveyorsSurveys(req.query.id)
     console.log(data)
     res.send(data)
 
@@ -38,7 +48,7 @@ server.get("/readsurveys", async (req,res) => {
 
 // POST   /register
 server.post("/signup", async (req,res) => {
-    const data = await addUser(req.body.addUser)   // addUser = {username:'fffffffff', email:'xxxxx@qqqq.com'}
+    const data = await addCustomer(req.body.addCustomer)   // addCustomer = {username:'fffffffff', email:'xxxxx@qqqq.com'}
     console.log(data) // 1 if row added
     res.send({"message": data})
 })
@@ -48,9 +58,10 @@ server.post("/signup", async (req,res) => {
 server.get("/signin", async (req,res) => {
     console.log("req.query:")
     console.table(req.query)
-    const data = await isUserRegistered(req.query.username)
-    console.log(data)  
-    res.send({"id": data})  // returns id of user or false
+    // const data = 3
+    const data = await isCustomerRegistered(req.query.first, req.query.last)
+    console.log("index.js has received a customer_id of "+data)  
+    res.send({"id": data})  // returns id of user or null
 })
 
 
