@@ -10,7 +10,7 @@ const { readCustomersSurveys, readSurveyorsSurveys, isCustomerRegistered, addSur
 
 
 // Define the path where the public files are, as built by React.
-server.use(express.static(path.join(__dirname, "client/public")))
+server.use(express.static(path.join(__dirname, "client/build")))
 
 
 // Set up bodyParser to allow HTTP POST requests in Express
