@@ -15,8 +15,8 @@ class Home extends Component {
 
     render() {
         return (
-            <div>
-                <h2>Home</h2>
+            <div id="Home">
+                <h2>Welcome to the window survey bookings system!</h2>
                 <Link className="book-a-survey-link" to="/book" title="Book a survey">Book a survey</Link>
             </div>
         )

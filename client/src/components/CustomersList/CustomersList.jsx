@@ -4,7 +4,11 @@ class CustomersList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            surveys: [{
+                date: "2000-01-01",
+                property: "Example House",
+                surveyor: "Beyonce Knowles"
+            }]
         }
     }
 
@@ -13,9 +17,32 @@ class CustomersList extends Component {
     }
 
     render() {
+        let surveys = this.state.surveys.map((survey, i)=>{
+            return (
+                <tr>
+                    <td>{survey.date}</td>
+                    <td>{survey.property}</td>
+                    <td>{survey.surveyor}</td>
+                    <td><button className="edit-button">Edit</button></td>
+                </tr>
+            )
+        })
         return (
-            <div>
+            <div id="CustomersList">
                 <h2>You&rsquo;re a customer. Thank you for trusting us with your windows. Here are your surveys.</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <td><h3>Date</h3></td>
+                            <td><h3>Property</h3></td>
+                            <td><h3>Surveyor</h3></td>
+                            <td><h3>Edit</h3></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {surveys}
+                    </tbody>
+                </table>
             </div>
         )
     }

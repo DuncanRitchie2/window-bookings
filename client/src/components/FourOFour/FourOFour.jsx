@@ -15,7 +15,7 @@ class FourOFour extends Component {
 
     render() {
         return (
-            <div>
+            <div id="FourOFour">
                 <h2>This page does not exist. <Link to="/" title="Home">Go back to the homepage.</Link></h2>
             </div>
         )

@@ -6,6 +6,9 @@
     --black: #282c34;
     --pale-blue: #c4ccdd;
     color: --black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .App-header {
@@ -16,6 +19,11 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+    width: 100%;
+}
+
+#SurveyorsList,#CustomersList,#Home,#Book {
+    width: 100%;
 }
 
 .book-a-survey-link {
@@ -25,12 +33,58 @@
     border: 0;
 }
 
-
-footer {
-    background-color: var(--pale-blue);
+form {
+    text-align: right;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 18px;
 }
 
-footer ul {
+form input {
+    margin: 3px 0 3px 12px;
+    padding: 3px;
+    width: 15em;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+button {
+    margin: 0 auto;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+td {
+    max-width: 25%;
+}
+
+#book-submit-button {
+    margin-top: 18px;
+}
+
+.edit-button {
+    width: 5em;
+}
+
+nav {
+    margin-top: 18px;
+    display: flex;
+    background-color: var(--pale-blue);
+    width: 100%;
+}
+
+nav ul {
     list-style-type: none;
-    padding: 12px 0;
+    padding: 0px 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
 }

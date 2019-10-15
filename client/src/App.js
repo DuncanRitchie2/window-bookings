@@ -10,40 +10,35 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-    <Router>
-        <header className="App-header">
-            <h2>Window bookings</h2>
-        </header>
+        <Router>
+            <header className="App-header">
+                <h2>Window bookings</h2>
+            </header>
+            
             <Switch>
-            <Route path="/book" component={Book}></Route>
-            <Route path="/view" component={CustomersList}></Route>
-            <Route path="/surveyor" component={SurveyorsList}></Route>
-            <Route path="/" exact component={Home}></Route>
-            <Route component={FourOFour}></Route>
+                <Route path="/book" component={Book}></Route>
+                <Route path="/view" component={CustomersList}></Route>
+                <Route path="/surveyor" component={SurveyorsList}></Route>
+                <Route path="/" exact component={Home}></Route>
+                <Route component={FourOFour}></Route>
             </Switch>
 
-            <footer>
+            <nav>
                 <ul>
                     <li>
-                        Made by Duncan Ritchie
+                        <Link to="/" title="Home">Home</Link>
                     </li>
-                    
-                    <nav>
-                        <li>
-                            <Link to="/" title="Home">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/book" title="Book a survey">Book a survey</Link>
-                        </li>
-                        <li>
-                            <Link to="/view" title="List surveys you&rsquo;ve booked">List surveys you&rsquo;ve booked</Link>
-                        </li>
-                        <li>
-                            <Link to="/surveyor" title="Surveyor&rsquo;s view">Surveyor view</Link>
-                        </li>
-                    </nav>
+                    <li>
+                        <Link to="/book" title="Book a survey">Book a survey</Link>
+                    </li>
+                    <li>
+                        <Link to="/view" title="List surveys you&rsquo;ve booked">List surveys you&rsquo;ve booked</Link>
+                    </li>
+                    <li>
+                        <Link to="/surveyor" title="Surveyor&rsquo;s view">Surveyor view</Link>
+                    </li>
                 </ul>
-            </footer>
+            </nav>
         
         </Router>
     </div>
