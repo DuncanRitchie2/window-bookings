@@ -13,7 +13,8 @@ class CustomersList extends Component {
     }
 
     componentDidMount() {
-
+        const hello = fetch('http://localhost:3019/readcustomerssurveys?id=4');
+        console.table(hello);
     }
 
     render() {
