@@ -170,3 +170,5 @@ insert into photos(survey_id, window_id, url) values
 -- --
 
 select * from photos join surveys on surveys.id = photos.survey_id join windows on windows.id = photos.window_id join premises on premises.id = windows.premises_id join customers on customers.id = surveys.customer_id join surveyors on surveyors.id = surveys.surveyor_id;
+
+SELECT surveys.id, customer_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN surveyors ON surveyors.id=surveys.surveyor_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=4;

@@ -49,7 +49,7 @@ const readCustomersSurveys = async (customer_id) => {
         // send the entire list to client
 
         //Mysql Query
-        const queryString = `SELECT surveys.id, surveyor_id, premises_id, dateToHappen FROM surveys JOIN customers ON customers.id=surveys.customer_id WHERE customer_id=${customer_id};`
+        const queryString = `SELECT surveys.id, surveyor_id, surveyors.firstName, surveyors.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN surveyors ON surveyors.id = surveys.surveyor_id WHERE customer_id=${customer_id};`
         let data = await promisifiedQuery(queryString)
 
         console.log('read Survey SQL query')
@@ -73,7 +73,7 @@ const readSurveyorsSurveys = async (surveyor_id) => {
         // send the entire list to client
 
         //Mysql Query
-        const queryString = `SELECT surveys.id, premises_id, date_due FROM surveys JOIN surveyors ON surveyors.id=surveys.surveyor_id WHERE surveyor_id=${surveyor_id};`
+        const queryString = `SELECT surveys.id, customer_id, customers.firstName, customers.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=${surveyor_id};`
         let data = await promisifiedQuery(queryString)
 
         console.log('read Survey SQL query')
