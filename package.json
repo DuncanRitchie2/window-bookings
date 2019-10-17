@@ -35,7 +35,5 @@
     "heroku": "^7.33.1",
     "mysql": "^2.17.1"
   },
-  "devDependencies": {
-    "cors": "^2.8.5"
-  }
+  "devDependencies": {}
 }
