@@ -8,12 +8,18 @@ class SurveyorsList extends Component {
                 date: "2000-01-01",
                 property: "Example House",
                 customer: "Kamala Harris"
+            },{
+                date: "2001-02-03",
+                property: "Sample Apartment",
+                customer: "Bernie Sanders"
             }]
         }
     }
 
-    componentDidMount() {
-
+    async componentDidMount() {
+        console.log("Fetching data!")
+        const hello = await fetch('http://localhost:3019/readsurveyorssurveys?id=4');
+        console.table(hello);
     }
 
     render() {

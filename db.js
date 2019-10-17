@@ -6,11 +6,6 @@ if (process.env.ENVIRONMENT != "PRODUCTION") {
 	dotenv.config()
 }
 
-// ******************** CHECK THIS *******************
-// make sure the local mysql setup corresponds to this
-// e.g. password should not typically be 'password' for
-// the mysql server
-
 const connection = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.DB_USER,
@@ -52,13 +47,14 @@ const readCustomersSurveys = async (customer_id) => {
         const queryString = `SELECT surveys.id, surveyor_id, surveyors.firstName, surveyors.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN surveyors ON surveyors.id = surveys.surveyor_id WHERE customer_id=${customer_id};`
         let data = await promisifiedQuery(queryString)
 
-        console.log('read Survey SQL query')
+        console.log('readCustomersSurvey SQL query')
         console.log(data)
         return(data) // returns an array of objects.
 
     } catch (error) {
-        console.log('readSurvey error')
+        console.log('readCustomersSurvey error')
         console.log(error.sqlMessage)
+        return("error");
     }
 
     // connection.end()
@@ -72,17 +68,18 @@ const readSurveyorsSurveys = async (surveyor_id) => {
         // Should read all surveys of the user from sql and 
         // send the entire list to client
 
-        //Mysql Query
+        //MySql Query
         const queryString = `SELECT surveys.id, customer_id, customers.firstName, customers.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=${surveyor_id};`
         let data = await promisifiedQuery(queryString)
 
-        console.log('read Survey SQL query')
+        console.log('readSurveyorSurvey SQL query')
         console.log(data)
         return(data) // returns an array of objects.
 
     } catch (error) {
-        console.log('readSurvey error')
+        console.log('readSurveyorsSurvey error')
         console.log(error.sqlMessage)
+        return("error")
     }
 
     // connection.end()

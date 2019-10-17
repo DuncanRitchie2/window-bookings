@@ -1,8 +1,9 @@
 // Require dependencies.
-const express = require('express')
-const server = express()
-const bodyParser = require('body-parser')
-const path = require('path')
+const express = require('express');
+const server = express();
+const bodyParser = require('body-parser');
+const path = require('path');
+const cors = require('cors');
 const port = process.env.PORT || 3019;
 
 // Require methods from app.js.
@@ -12,6 +13,10 @@ const { readCustomersSurveys, readSurveyorsSurveys, isCustomerRegistered, addSur
 // Define the path where the public files are, as built by React.
 server.use(express.static(path.join(__dirname, "client/build")))
 
+// Allow cross-origin requests in development.
+if (process.env.ENVIRONMENT !== 'production') {
+    server.use(cors());
+}
 
 // Set up bodyParser to allow HTTP POST requests in Express
 server.use(bodyParser.urlencoded({ extended: false }))
@@ -30,7 +35,7 @@ server.use(bodyParser.json())
 server.get("/readcustomerssurveys", async (req,res) => {
     console.log("Hello from /readcustomerssurveys!")
     const data = await readCustomersSurveys(req.query.id) 
-    res.send(data)
+    res.send({"data": data})
 
 })
 
@@ -41,7 +46,7 @@ server.get("/readsurveyorssurveys", async (req,res) => {
     console.log(req.body)
     const data = await readSurveyorsSurveys(req.query.id)
     console.log(data)
-    res.send(data)
+    res.send({"data": data})
 
 })
 

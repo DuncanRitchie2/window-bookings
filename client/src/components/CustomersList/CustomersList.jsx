@@ -7,14 +7,20 @@ class CustomersList extends Component {
             surveys: [{
                 date: "2000-01-01",
                 property: "Example House",
-                surveyor: "Beyonce Knowles"
+                surveyor: "Beyoncé Knowles"
+            },{
+                date: "2004-02-12",
+                property: "1 Average Street",
+                surveyor: "Sam Smith"
             }]
         }
     }
 
-    componentDidMount() {
-        const hello = fetch('http://localhost:3019/readcustomerssurveys?id=4');
+    async componentDidMount() {
+        console.log("Fetching data!")
+        const hello = await fetch('http://localhost:3019/readcustomerssurveys?id=4');
         console.table(hello);
+        console.table(hello.body);
     }
 
     render() {
