@@ -18,7 +18,7 @@ class SurveyorsList extends Component {
 
     async componentDidMount() {
         console.log("Fetching data!")
-        const hello = await fetch('http://localhost:3019/readsurveyorssurveys?id=4');
+        const hello = await fetch('http://localhost:3019/readsurveyorssurveys?id=4').then((data)=>{console.log(data)});
         console.table(hello);
     }
 

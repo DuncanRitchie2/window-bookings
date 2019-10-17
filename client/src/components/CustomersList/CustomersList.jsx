@@ -20,7 +20,7 @@ class CustomersList extends Component {
         console.log("Fetching data!")
         const hello = await fetch('http://localhost:3019/readcustomerssurveys?id=4');
         console.table(hello);
-        console.table(hello.body);
+        console.log(hello.body);
     }
 
     render() {

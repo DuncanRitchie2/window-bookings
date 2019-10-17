@@ -8,13 +8,24 @@ const port = process.env.PORT || 3019;
 // Require methods from app.js.
 const { readCustomersSurveys, readSurveyorsSurveys, isCustomerRegistered, addSurvey, addCustomer, editSurvey, deleteSurvey } = require('./db')
 
-
 // Define the path where the public files are, as built by React.
 server.use(express.static(path.join(__dirname, "client/build")))
 
 // Set up bodyParser to allow HTTP POST requests in Express
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json())
+
+// Allow cross-origin requests.
+server.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
+//   app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     next();
+//   });
 
 // server.get("/total", async (req, res) =>{
 //     const total = await runTotal();
@@ -29,7 +40,8 @@ server.use(bodyParser.json())
 server.get("/readcustomerssurveys", async (req,res) => {
     console.log("Hello from /readcustomerssurveys!")
     const data = await readCustomersSurveys(req.query.id) 
-    res.send({"data": data})
+    console.log(data)
+    res.send(data)
 
 })
 
@@ -40,7 +52,7 @@ server.get("/readsurveyorssurveys", async (req,res) => {
     console.log(req.body)
     const data = await readSurveyorsSurveys(req.query.id)
     console.log(data)
-    res.send({"data": data})
+    res.send(data)
 
 })
 
