@@ -12,6 +12,8 @@ html,body {
     --pale-blue: #c4ccdd;
     --deep-blue: #273f74;
     --white: #edf1fc;
+    --light-gold: #fff0c3;
+    --gold: #ddc992;
     color: --black;
     display: flex;
     flex-direction: column;
@@ -58,6 +60,14 @@ form {
     padding-bottom: 18px;
 }
 
+form h3 {
+    float: right;
+    text-align: left;
+    background-color: var(--very-pale-blue);
+    padding: 3px 12px;
+    width: 95%;
+}
+
 form input {
     margin: 3px 0 3px 12px;
     padding: 3px;
@@ -72,6 +82,14 @@ button {
     font-family: inherit;
     font-size: inherit;
     border-radius: 8px;
+    background-image: radial-gradient(var(--light-gold), var(--gold));
+    background-position: center;
+    background-size: 100%;
+    transition: background-size 0.3s;
+}
+
+button:hover {
+    background-size: 200%;
 }
 
 table {
@@ -94,6 +112,7 @@ td {
 
 #book-submit-button {
     margin-top: 18px;
+    font-size: 18px;
 }
 
 .edit-button {

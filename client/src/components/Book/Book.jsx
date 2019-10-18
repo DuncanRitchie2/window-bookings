@@ -9,6 +9,7 @@ class Book extends Component {
                 lastName: "",
                 propertyAddress: "",
                 propertyTown: "",
+                propertyCountry: "UK",
                 surveyDate: "", // Date is set to tomorrow in componentDidMount().
                 surveyTime: "" || "09:00" // Default time is 9am.
             }
@@ -18,42 +19,60 @@ class Book extends Component {
     }
 
     componentDidMount() {
+        // Set surveyDate to tomorrow.
         const tomorrow = new Date(new Date().valueOf()+1000*60*60*24);
-        console.log(tomorrow)
+        // Dates need to be in the format yyyy-mm-dd.
         const tomorrowString = tomorrow.getFullYear()+"-"+(tomorrow.getMonth()+1)+"-"+tomorrow.getDate()
-        console.log(tomorrowString);
         
+        // Update state.
         let inputValues = this.state.inputValues;
         inputValues.surveyDate = tomorrowString;
         this.setState({inputValues})
     }
 
     updateInputValue(e) {
+        // Whenever an input is changed, the state is updated.
         let inputValues = this.state.inputValues;
         inputValues[e.target.id] = e.target.value;
         this.setState({inputValues})
     }
 
-    submit(e) {
+    async submit(e) {
         e.preventDefault();
 
         let inputValues = this.state.inputValues;
 
-        if (inputValues.firstName && inputValues.lastName && inputValues.propertyAddress && inputValues.propertyTown && inputValues.surveyDate && inputValues.surveyTime) {
+        if (inputValues.firstName && inputValues.lastName && inputValues.propertyAddress && inputValues.propertyTown && inputValues.propertyCountry && inputValues.surveyDate && inputValues.surveyTime) {
             alert("Thank you for placing your booking!")
-            // Insert code here for sending data to backend.
 
+            console.log("Adding a survey!")
+
+            // Send data to backend
+            let response = await fetch("/addsurvey",{
+                method:"POST",
+                headers: { "content-type" : "application/json" },
+                body: JSON.stringify({
+                    newSurvey: this.state.inputValues
+                })
+            })
+        
+            let result = await response.json()
+            console.log(result)
+
+            // Refresh state. View changes anyway, so this doesn't actually matter.
             this.setState({
                 inputValues: {
                     firstName: "",
                     lastName: "",
                     propertyAddress: "",
                     propertyTown: "",
+                    propertyCountry: "UK",
                     surveyDate: "",
-                    surveyTime: ""
+                    surveyTime: "09:00"
                 }
             })
 
+            // Redirect to CustomerList.
             window.location.pathname = "/list"
         }
         else {
@@ -66,14 +85,19 @@ class Book extends Component {
             <div id="Book">
                 <h2>Book a new survey</h2>
                 <form>
+                    <h3>What&rsquo;s your name?</h3>
                     <label htmlFor="firstName">Your first name</label>
                     <input id="firstName" value={this.state.inputValues.firstName} onChange={this.updateInputValue}/><br />
                     <label htmlFor="lastName">Your last name</label>
                     <input id="lastName" value={this.state.inputValues.lastName} onChange={this.updateInputValue} /><br />
-                    <label htmlFor="propertyAddress">Property address first line</label>
+                    <h3>Where will we be surveying?</h3>
+                    <label htmlFor="propertyAddress">Address first line</label>
                     <input id="propertyAddress" value={this.state.inputValues.propertyAddress} onChange={this.updateInputValue} /><br />
-                    <label htmlFor="propertyTown">Property town</label>
+                    <label htmlFor="propertyTown">Town</label>
                     <input id="propertyTown" value={this.state.inputValues.propertyTown} onChange={this.updateInputValue} /><br />
+                    <label htmlFor="propertyCountry">Country</label>
+                    <input id="propertyCountry" value={this.state.inputValues.propertyCountry} onChange={this.updateInputValue} /><br />
+                    <h3>When do you want us to come?</h3>
                     <label htmlFor="surveyDate">Preferred date</label>
                     <input id="surveyDate" type="date" value={this.state.inputValues.surveyDate} onChange={this.updateInputValue} /><br />
                     <label htmlFor="surveyTime">Preferred time</label>

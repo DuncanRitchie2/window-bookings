@@ -88,7 +88,7 @@ const readSurveyorsSurveys = async (surveyor_id) => {
 
 // Check if the customer is actually signed-up
 
-const isCustomerRegistered = async (firstNameGiven, lastNameGiven) => {
+const getCustomerId = async (firstNameGiven, lastNameGiven) => {
     console.log("Testing whether "+firstNameGiven+" "+lastNameGiven+" is registered")
     
     try {
@@ -103,7 +103,7 @@ const isCustomerRegistered = async (firstNameGiven, lastNameGiven) => {
             return data[0].id
         }
         else{
-            console.log(`Customer ${firstNameGiven} ${lastNameGiven} doesn't exist in database, client needs to ask to register`)
+            console.log(`Customer ${firstNameGiven} ${lastNameGiven} doesn't exist in database`)
             console.log("The customer_id is null")
             return null
         }
@@ -117,21 +117,95 @@ const isCustomerRegistered = async (firstNameGiven, lastNameGiven) => {
 }
 
 
-// Add a survey
-const addSurvey = async (survey) => {
+const splitAddress = (address) => {
+    // Parse address into houseName, houseNumber, and street.
+    const firstWord = address.split(" ")[0]
+    const street = address.replace(firstWord+" ","")
+    let houseNumber = parseInt(firstWord, 10)
+    let houseName = null
+    if (!houseNumber) {
+        houseNumber = null;
+        houseName = firstWord;
+    }
+    return {
+        houseName, houseNumber, street
+    }
+}
+
+const getPremisesId = async (address, town, country) => {
+    console.log("Testing whether "+address+", "+town+", "+country+" is registered")
+
+    // Parse address into houseName, houseNumber, and street.
+    const addressObject = splitAddress(address)
+    const { houseName, houseNumber, street } = addressObject
+
     try {
-        let { customer_id, premises_id, date_booked } = survey
-        // MySql Query
-        const queryString = `INSERT INTO surveys(customer_id,premises_id,date_booked) VALUES ('${customer_id}','${premises_id}','${date_booked}');`
+        //MySql Query
+        const queryString = `SELECT id FROM premises WHERE houseName='${houseName}' && houseNumber='${houseNumber}' && street='${street}' && town='${town}' && country='${country}';`
+        
         let data = await promisifiedQuery(queryString)
 
-        console.log('addSurvey SQL query')
-        console.log(data)
-
+        if (data[0] !== undefined){
+            console.log("Premises "+address+", "+town+", "+country+" exists in database")
+            console.log("The premises_id is "+data[0].id)
+            return data[0].id
+        }
+        else {
+            console.log("Premises "+address+", "+town+", "+country+" does not exist in database")
+            console.log("The premises_id is null")
+            return null
+        }
 
     } catch (error) {
-        console.log('addSurvey error')
-        console.log(error.sqlMessage)
+        console.log('is Customer Registered error')
+        console.log('The error message is '+error.sqlMessage)
+    }
+
+}
+
+// Add a survey
+const addSurvey = async (survey) => {
+    const customer_id = await getCustomerId(survey.firstName, survey.lastName)
+    const premises_id = await getPremisesId(survey.propertyAddress, survey.propertyTown, survey.propertyCountry)
+
+    if (!customer_id) {
+        // If there is no matching customer existing, we add a customer, and retrieve the new customer_id.
+        const newCustomerResponse = await addCustomer(survey.firstName, survey.lastName)
+        if (newCustomerResponse === "Added new customer ok") {
+            customer_id = await getCustomerId(survey.firstName, survey.lastName)
+        }
+    }
+
+    if (!premises_id) {
+        // If there is no matching premises existing, we add a premises, and retrieve the new premises_id.
+        const newPremisesResponse = await addPremises(survey.propertyAddress, survey.propertyTown, survey.propertyCountry)
+        if (newPremisesResponse === "Added new premises ok") {
+            premises_id = await getPremisesId(survey.propertyAddress, survey.propertyTown, survey.propertyCountry)
+        }
+    }
+
+    if (customer_id && premises_id) {
+        try {
+            let { surveyDate, surveyTime } = survey
+            const dateToHappen = surveyDate+" "+surveyTime+":00";
+
+            // Date and time need to be merged.
+            
+            // MySql Query
+            const queryString = `INSERT INTO surveys(customer_id,premises_id,date_booked) VALUES ('${customer_id}','${premises_id}','${dateToHappen}');`
+            let data = await promisifiedQuery(queryString)
+
+            console.log('addSurvey SQL query')
+            console.log(data)
+
+        } catch (error) {
+            console.log('addSurvey error')
+            console.log(error.sqlMessage)
+        }
+    }
+    
+    else {
+        console.log('Error adding a new customer or premises.')
     }
 
     // connection.end()
@@ -139,15 +213,11 @@ const addSurvey = async (survey) => {
 
 
 // Add a customer.
-const addCustomer = async (customer) => {
+const addCustomer = async (firstName, lastName) => {
     try {
-        let { newUserName, newEmail } = addUser
          //MySql Query
-        const queryString = `INSERT INTO customers (username, email) VALUES ('${newUserName}', '${newEmail}');`
+        const queryString = `INSERT INTO customers (firstName, lastName) VALUES ('${firstName}', '${lastName}');`
         let data = await promisifiedQuery(queryString)
-
-        // Sql should add new user and give back a customer_id
-        // server should send this customer_id to client 
         
         console.log('Add customer via SQL query')
         console.log(data)
@@ -155,6 +225,29 @@ const addCustomer = async (customer) => {
 
     } catch (error) {
         console.log('Add customer error')
+        return(error.code)
+    }
+
+    // connection.end()
+}
+
+// Add a premises.
+const addPremises = async (address, town, country) => {
+    // Parse address into houseName, houseNumber, and street.
+    const addressObject = splitAddress(address)
+    const { houseName, houseNumber, street } = addressObject
+
+    try {
+         //MySql Query
+        const queryString = `INSERT INTO premises (houseName, houseNumber, street, town, country) VALUES ('${houseName}', '${houseNumber}', '${street}', '${town}', '${country}');`
+        let data = await promisifiedQuery(queryString)
+        
+        console.log('Add premises via SQL query')
+        console.log(data)
+        return(data.message || "Added new premises ok")
+
+    } catch (error) {
+        console.log('Add premises error')
         return(error.code)
     }
 
@@ -212,7 +305,7 @@ const deleteSurvey = async (survey) => {
 module.exports = {
     readCustomersSurveys,
     readSurveyorsSurveys,
-    isCustomerRegistered,
+    getCustomerId,
     addSurvey,
     addCustomer,
     editSurvey,
