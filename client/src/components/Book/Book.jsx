@@ -9,8 +9,8 @@ class Book extends Component {
                 lastName: "",
                 propertyAddress: "",
                 propertyTown: "",
-                surveyDate: "",
-                surveyTime: ""
+                surveyDate: "", // Date is set to tomorrow in componentDidMount().
+                surveyTime: "" || "09:00" // Default time is 9am.
             }
         }
         this.updateInputValue = this.updateInputValue.bind(this);
@@ -18,12 +18,20 @@ class Book extends Component {
     }
 
     componentDidMount() {
+        const tomorrow = new Date(new Date().valueOf()+1000*60*60*24);
+        console.log(tomorrow)
+        const tomorrowString = tomorrow.getFullYear()+"-"+(tomorrow.getMonth()+1)+"-"+tomorrow.getDate()
+        console.log(tomorrowString);
+        
+        let inputValues = this.state.inputValues;
+        inputValues.surveyDate = tomorrowString;
+        this.setState({inputValues})
     }
 
     updateInputValue(e) {
         let inputValues = this.state.inputValues;
         inputValues[e.target.id] = e.target.value;
-        this.setState(inputValues)
+        this.setState({inputValues})
     }
 
     submit(e) {
@@ -69,7 +77,7 @@ class Book extends Component {
                     <label htmlFor="surveyDate">Preferred date</label>
                     <input id="surveyDate" type="date" value={this.state.inputValues.surveyDate} onChange={this.updateInputValue} /><br />
                     <label htmlFor="surveyTime">Preferred time</label>
-                    <input id="surveyTime" type="time" value={this.state.inputValues.surveyTime} onChange={this.updateInputValue} /><br />
+                    <input id="surveyTime" type="time" value={this.state.inputValues.surveyTime} onChange={this.updateInputValue} default="12:00" /><br />
                     <button id="book-submit-button" onClick={this.submit}>Submit</button>
                 </form>
             </div>
