@@ -12,7 +12,7 @@ function App() {
     <div className="App">
         <Router>
             <header className="App-header">
-                <h2>Window bookings</h2>
+                <h1>Window bookings</h1>
             </header>
             
             <main>
