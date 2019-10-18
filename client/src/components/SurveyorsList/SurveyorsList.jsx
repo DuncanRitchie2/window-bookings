@@ -35,11 +35,11 @@ class SurveyorsList extends Component {
         let surveys = this.state.surveys.map((survey, i)=>{
             return (
                 <tr key={i}>
-                    <td>{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
-                    <td>{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
-                    <td><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude}&deg; {survey.longitude}&deg;</a></td>
-                    <td>{survey.firstName} {survey.lastName}</td>
-                    <td><button className="edit-button">Edit</button></td>
+                    <td className="cell-date">{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
+                    <td className="cell-address">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
+                    <td className="cell-latlong"><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
+                    <td className="cell-name">{survey.firstName} {survey.lastName}</td>
+                    <td className="cell-edit"><button className="edit-button">Edit</button></td>
                 </tr>
             )
         })
@@ -49,11 +49,11 @@ class SurveyorsList extends Component {
                 <table>
                     <thead>
                         <tr>
-                            <td><h3>Date Due</h3></td>
-                            <td><h3>Property Address</h3></td>
-                            <td><h3>Latitude &amp; Longitude</h3></td>
-                            <td><h3>Customer</h3></td>
-                            <td><h3>Edit</h3></td>
+                            <td className="cell-date"><h3>Date Due</h3></td>
+                            <td className="cell-address"><h3>Property Address</h3></td>
+                            <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
+                            <td className="cell-customer"><h3>Customer</h3></td>
+                            <td className="cell-edit"><h3>Edit</h3></td>
                         </tr>
                     </thead>
                     <tbody>

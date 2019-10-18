@@ -73,6 +73,14 @@ table {
     margin-bottom: 18px;
 }
 
+thead {
+    background-color: var(--pale-blue);
+}
+
+tr:nth-child(2) {
+    background-color: var(--very-pale-blue);
+}
+
 td {
     max-width: 25%;
 }
@@ -130,6 +138,62 @@ nav a:hover,.nav-link-current:hover {
 
 
 @media (max-width:560px) {
+
+    table {
+        width: 100%;
+    }
+
+    thead tr {
+        padding: 12px 0;
+    }
+    
+    thead td {
+        padding: 0;
+    }
+
+    thead h3 {
+        margin: 0;
+    }
+
+    tr {
+        display: grid;
+        grid: 
+            "date address address"
+            "latlong name edit";
+        align-items: stretch;
+    }
+
+    tr * {
+        min-width: 33vw;
+        padding: 6px 0;
+    }
+
+    tbody tr {
+        padding: 6px 0;
+    }
+
+    .cell-date {
+        grid-area: date;
+    }
+
+    .cell-address {
+        grid-area: address;
+        min-width: 66vw;
+    }
+
+    .cell-latlong {
+        grid-area: latlong;
+    }
+
+    .cell-name {
+        grid-area: name;
+    }
+
+    .cell-edit {
+        grid-area: edit;
+    }
+
+
     nav {
         background-image: linear-gradient(var(--white), var(--pale-blue))
     }
