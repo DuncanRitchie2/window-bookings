@@ -24,16 +24,19 @@ const promisifiedQuery = promisify(connection.query).bind(connection)
 // Methods for addUser, readSurveys, isUserRegistered, addSurvey, editSurvey, deleteSurvey
 
 
-// // gets total number of users
-// const runTotal = async () => {
-//     try{
-//         let total = await promisifiedQuery('SELECT count(*) as num FROM users');
-//         return(total)
-//     } catch (error) {
-//         console.log(error.sqlMessage);
-//     }
-//     connection.end()
-// }
+// Get the count of surveyors. Useful in assigning a surveyor to a new survey.
+const countSurveyors = async () => {
+    try {
+        let total = await promisifiedQuery('SELECT count(*) as num FROM surveyors');
+        console.table(total)
+        console.log(total[0])
+        console.log("total.num = "+total.num)
+        return(total[0].num)
+    } catch (error) {
+        console.log(error.sqlMessage);
+    }
+    // connection.end()
+}
 
 
 // Retrieve all the customer's surveys.
@@ -165,8 +168,8 @@ const getPremisesId = async (address, town, country) => {
 
 // Add a survey
 const addSurvey = async (survey) => {
-    const customer_id = await getCustomerId(survey.firstName, survey.lastName)
-    const premises_id = await getPremisesId(survey.propertyAddress, survey.propertyTown, survey.propertyCountry)
+    let customer_id = await getCustomerId(survey.firstName, survey.lastName)
+    let premises_id = await getPremisesId(survey.propertyAddress, survey.propertyTown, survey.propertyCountry)
 
     if (!customer_id) {
         // If there is no matching customer existing, we add a customer, and retrieve the new customer_id.
@@ -186,13 +189,19 @@ const addSurvey = async (survey) => {
 
     if (customer_id && premises_id) {
         try {
+            // Date and time are separate on front-end, so need to be merged.
             let { surveyDate, surveyTime } = survey
             const dateToHappen = surveyDate+" "+surveyTime+":00";
 
-            // Date and time need to be merged.
+            // Assign the survey to a random surveyor.
+            const numSurveyors = await countSurveyors()
+            console.log("There are "+numSurveyors+" surveyors")
+            console.table(numSurveyors)
+            const surveyor_id = Math.floor(Math.random()*numSurveyors);
+            console.log("The chosen surveyor is "+surveyor_id)
             
-            // MySql Query
-            const queryString = `INSERT INTO surveys(customer_id,premises_id,date_booked) VALUES ('${customer_id}','${premises_id}','${dateToHappen}');`
+            // MySql query
+            const queryString = `INSERT INTO surveys(customer_id, premises_id, dateToHappen, surveyor_id, status) VALUES ('${customer_id}','${premises_id}','${dateToHappen}', '${surveyor_id}', 'pending');`
             let data = await promisifiedQuery(queryString)
 
             console.log('addSurvey SQL query')
