@@ -15,13 +15,15 @@ function App() {
                 <h2>Window bookings</h2>
             </header>
             
-            <Switch>
-                <Route path="/book" component={Book}></Route>
-                <Route path="/list" component={CustomersList}></Route>
-                <Route path="/surveyor" component={SurveyorsList}></Route>
-                <Route path="/" exact component={Home}></Route>
-                <Route component={FourOFour}></Route>
-            </Switch>
+            <main>
+                <Switch>
+                    <Route path="/book" component={Book}></Route>
+                    <Route path="/list" component={CustomersList}></Route>
+                    <Route path="/surveyor" component={SurveyorsList}></Route>
+                    <Route path="/" exact component={Home}></Route>
+                    <Route component={FourOFour}></Route>
+                </Switch>
+            </main>
 
             <nav>
                 <ul>

@@ -36,7 +36,7 @@ class SurveyorsList extends Component {
             return (
                 <tr key={i}>
                     <td>{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
-                    <td>{survey.houseName} {survey.houseNumber} {survey.street}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
+                    <td>{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
                     <td><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude}&deg; {survey.longitude}&deg;</a></td>
                     <td>{survey.firstName} {survey.lastName}</td>
                     <td><button className="edit-button">Edit</button></td>
