@@ -101,7 +101,7 @@ thead {
     background-color: var(--pale-blue);
 }
 
-tr:nth-child(2) {
+tr:nth-child(2n) {
     background-color: var(--very-pale-blue);
 }
 
