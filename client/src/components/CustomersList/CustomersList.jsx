@@ -4,32 +4,40 @@ class CustomersList extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            user_id: 4,
             surveys: [{
-                date: "2000-01-01",
+                dateToHappen: "2000-01-01",
                 property: "Example House",
                 surveyor: "Beyoncé Knowles"
             },{
-                date: "2004-02-12",
+                dateToHappen: "2004-02-12",
                 property: "1 Average Street",
                 surveyor: "Sam Smith"
             }]
         }
     }
 
-    async componentDidMount() {
+
+    async readSurveys() {
         console.log("Fetching data!")
-        const hello = await fetch('http://localhost:3019/readcustomerssurveys?id=4');
-        console.table(hello);
-        console.table(hello.body);
+        const response = await fetch('http://localhost:3019/readcustomerssurveys?id='+this.state.user_id);
+        const responseJson = await response.json();
+        console.table(responseJson);
+        this.setState({surveys: responseJson});
+    }
+
+    async componentDidMount() {
+        this.readSurveys();
     }
 
     render() {
         let surveys = this.state.surveys.map((survey, i)=>{
             return (
                 <tr key={i}>
-                    <td>{survey.date}</td>
-                    <td>{survey.property}</td>
-                    <td>{survey.surveyor}</td>
+                    <td>{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
+                    <td>{survey.houseName} {survey.houseNumber} {survey.street}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
+                    <td><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
+                    <td>{survey.firstName} {survey.lastName}</td>
                     <td><button className="edit-button">Edit</button></td>
                 </tr>
             )
@@ -40,8 +48,9 @@ class CustomersList extends Component {
                 <table>
                     <thead>
                         <tr>
-                            <td><h3>Date</h3></td>
-                            <td><h3>Property</h3></td>
+                            <td><h3>Date Due</h3></td>
+                            <td><h3>Property Address</h3></td>
+                            <td><h3>Latitude &amp; Longitude</h3></td>
                             <td><h3>Surveyor</h3></td>
                             <td><h3>Edit</h3></td>
                         </tr>
