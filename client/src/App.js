@@ -17,10 +17,16 @@ class App extends Component {
                 first_name: "",
                 last_name: ""
             },
+            // surveyor: {
+            //     id: null,
+            //     first_name: "",
+            //     last_name: ""
+            // }
+            // ,
             surveyor: {
-                id: null,
-                first_name: "",
-                last_name: ""
+                id: 4,
+                first_name: "Camila",
+                last_name: "Cabello"
             }
         }
         this.changeCustomer = this.changeCustomer.bind(this)
