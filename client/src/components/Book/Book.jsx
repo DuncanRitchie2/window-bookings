@@ -113,7 +113,7 @@ class Book extends Component {
                     <label htmlFor="surveyDate">Preferred date</label>
                     <input id="surveyDate" type="date" value={this.state.inputValues.surveyDate} onChange={this.updateInputValue} /><br />
                     <label htmlFor="surveyTime">Preferred time</label>
-                    <input id="surveyTime" type="time" value={this.state.inputValues.surveyTime} onChange={this.updateInputValue} default="12:00" /><br />
+                    <input id="surveyTime" type="time" value={this.state.inputValues.surveyTime} onChange={this.updateInputValue} /><br />
                     <button id="book-submit-button" onClick={this.submit}>Submit</button>
                 </form>
             </div>
