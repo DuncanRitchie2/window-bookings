@@ -177,6 +177,15 @@ nav a:hover,.nav-link-current:hover {
         padding-bottom: 197px; /* This is the height of navbar on mobile, plus 15px */
     }
 
+    .book-a-survey-link {
+        width: initial;
+    }
+
+    form input {
+        background-color: var(--very-pale-blue);
+        width: 50%;
+    }
+
     table {
         width: 100%;
     }
