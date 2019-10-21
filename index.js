@@ -79,10 +79,11 @@ server.get("/signin", async (req,res) => {
 // POST   /addsurvey
 server.post("/addsurvey", async (req,res) => {
 
-    const data = addSurvey(req.body.newSurvey)
-    console.log(data)
+    const data = await addSurvey(req.body.newSurvey)
+    console.log("The server has received a customer_id of "+data)
 
-    res.send({message: 'Added survey ok'})
+    // data is simply the customer_id.
+    res.send({message: 'Added survey ok', customer_id: data})
 })
 
 

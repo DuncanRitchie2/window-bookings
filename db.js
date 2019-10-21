@@ -47,7 +47,7 @@ const readCustomersSurveys = async (customer_id) => {
         // send the entire list to client
 
         //Mysql Query
-        const queryString = `SELECT surveys.id, surveyor_id, surveyors.firstName, surveyors.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN surveyors ON surveyors.id = surveys.surveyor_id WHERE customer_id=${customer_id};`
+        const queryString = `SELECT surveys.id, surveyor_id, surveyors.firstName, surveyors.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN surveyors ON surveyors.id = surveys.surveyor_id WHERE customer_id=${customer_id} ORDER BY dateToHappen DESC;`
         let data = await promisifiedQuery(queryString)
 
         console.log('readCustomersSurvey SQL query')
@@ -72,7 +72,7 @@ const readSurveyorsSurveys = async (surveyor_id) => {
         // send the entire list to client
 
         //MySql Query
-        const queryString = `SELECT surveys.id, customer_id, customers.firstName, customers.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=${surveyor_id};`
+        const queryString = `SELECT surveys.id, customer_id, customers.firstName, customers.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=${surveyor_id} ORDER BY dateToHappen DESC;`
         let data = await promisifiedQuery(queryString)
 
         console.log('readSurveyorSurvey SQL query')
@@ -197,7 +197,7 @@ const addSurvey = async (survey) => {
             const numSurveyors = await countSurveyors()
             console.log("There are "+numSurveyors+" surveyors")
             console.table(numSurveyors)
-            const surveyor_id = Math.floor(Math.random()*numSurveyors);
+            const surveyor_id = Math.ceil(Math.random()*numSurveyors);
             console.log("The chosen surveyor is "+surveyor_id)
             
             // MySql query
@@ -206,6 +206,9 @@ const addSurvey = async (survey) => {
 
             console.log('addSurvey SQL query')
             console.log(data)
+            
+            console.log('Attempting to send customer_id ('+customer_id+') from db.addSurvey()')
+            return(customer_id);
 
         } catch (error) {
             console.log('addSurvey error')
@@ -247,7 +250,8 @@ const addPremises = async (address, town, country) => {
     const { houseName, houseNumber, street } = addressObject
 
     try {
-         //MySql Query
+        //MySql Query
+        console.log("Attempting to add "+houseName+" "+houseNumber+" "+street+", "+town+", "+country+" into database.")
         const queryString = `INSERT INTO premises (houseName, houseNumber, street, town, country) VALUES ('${houseName}', '${houseNumber}', '${street}', '${town}', '${country}');`
         let data = await promisifiedQuery(queryString)
         

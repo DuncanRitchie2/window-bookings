@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom';
 
 class Book extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class Book extends Component {
                 propertyCountry: "UK",
                 surveyDate: "", // Date is set to tomorrow in componentDidMount().
                 surveyTime: "" || "09:00" // Default time is 9am.
-            }
+            },
+            redirectToCustomerList: false
         }
         this.updateInputValue = this.updateInputValue.bind(this);
         this.submit = this.submit.bind(this);
@@ -43,7 +45,7 @@ class Book extends Component {
         let inputValues = this.state.inputValues;
 
         if (inputValues.firstName && inputValues.lastName && inputValues.propertyAddress && inputValues.propertyTown && inputValues.propertyCountry && inputValues.surveyDate && inputValues.surveyTime) {
-            alert("Thank you for placing your booking!")
+            alert("Thank you "+inputValues.firstName+" for placing your booking!")
 
             console.log("Adding a survey!")
 
@@ -59,6 +61,9 @@ class Book extends Component {
             let result = await response.json()
             console.log(result)
 
+            // Update customer_id with the new value.
+            this.props.changeCustomer(result.customer_id, inputValues.firstName, inputValues.lastName)
+
             // Refresh state. View changes anyway, so this doesn't actually matter.
             this.setState({
                 inputValues: {
@@ -73,7 +78,9 @@ class Book extends Component {
             })
 
             // Redirect to CustomerList.
-            window.location.pathname = "/list"
+            this.setState({
+                redirectToCustomerList: true
+            })
         }
         else {
             alert("Please fill in all values.")
@@ -81,6 +88,11 @@ class Book extends Component {
     }
 
     render() {
+        if (this.state.redirectToCustomerList) {
+            return (
+                <Redirect to='/list' />
+            )
+        }
         return (
             <div id="Book">
                 <h2>Book a new survey</h2>

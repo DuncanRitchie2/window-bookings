@@ -1,96 +1,102 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 class CustomersList extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            user_id: 4,
-            surveys: [{
+        this.state = { 
+            surveys: [{  // These are fake placeholder data that will be replaced on mount.
                 dateToHappen: "2000-01-01",
                 property: "Example House",
-                surveyor: "Beyoncé Knowles"
+                firstName: "Beyoncé",
+                lastName: "Knowles"
             },{
                 dateToHappen: "2004-02-12",
                 property: "1 Average Street",
-                surveyor: "Sam Smith"
+                firstName: "Sam",
+                lastName: "Smith"
             }]
         }
     }
 
 
     async readSurveys() {
-        console.log("Fetching data!")
-        const response = await fetch('http://localhost:3019/readcustomerssurveys?id='+this.state.user_id);
-        const responseJson = await response.json();
-        console.table(responseJson);
-        this.setState({surveys: responseJson});
+        const customer_id = this.props.customer.id;
+        if (customer_id) {
+            console.log("Fetching data for customer_id "+customer_id+"!")
+            const response = await fetch('http://localhost:3019/readcustomerssurveys?id='+customer_id);
+            const responseJson = await response.json();
+            console.table(responseJson);
+            this.setState({surveys: responseJson});
+        }
+        else {
+            console.log("You're not signed in as a customer!")
+        }
     }
 
     async componentDidMount() {
         this.readSurveys();
     }
 
+    async componentDidUpdate(pastProps) {
+        if (pastProps.customerId !== this.props.customerId) {
+            this.readSurveys();
+        }
+    }
+
     render() {
-        let surveys = this.state.surveys.map((survey, i)=>{
+        let surveys;
+        console.table(this.props)
+        console.log(this.props.customer.id)
+        if (this.props.customer.id) {
+            surveys = this.state.surveys.map((survey, i)=>{
+                return (
+                        <tr key={i}>
+                            <td className="cell-date">{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
+                            <td className="cell-address">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
+                            <td className="cell-latlong"><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
+                            <td className="cell-name">{survey.firstName} {survey.lastName}</td>
+                            <td className="cell-edit"><button className="edit-button">Edit</button></td>
+                        </tr>
+                    
+                )
+            })
+            console.log(surveys)
+            if (!surveys[0]) {
+                surveys = (
+                    <tr><td colSpan="5">
+                        You have no surveys! Please <Link to="/book" title="Book a survey">book a survey</Link>!
+                    </td></tr>
+                )
+            }
+
             return (
-                // window.innerWidth < 560 ? 
-                // (
-                //     <>
-                //         <tr key={i}>
-                //             <td>{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
-                //             <td colSpan="2">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
-                //         </tr>
-                //         <tr>
-                //             <td><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
-                //             <td>{survey.firstName} {survey.lastName}</td>
-                //             <td><button className="edit-button">Edit</button></td>
-                //         </tr>
-                //     </>
-                // ) : (
-                    <tr key={i}>
-                        <td className="cell-date">{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
-                        <td className="cell-address">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
-                        <td className="cell-latlong"><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
-                        <td className="cell-name">{survey.firstName} {survey.lastName}</td>
-                        <td className="cell-edit"><button className="edit-button">Edit</button></td>
-                    </tr>
-                // ) 
-                
+                <div id="CustomersList">
+                    <h2>Hello {this.props.customer.firstName} {this.props.customer.lastName}! Here are the surveys you have booked as a customer.</h2>
+                    <table>
+                        <thead>
+                                <tr>
+                                    <td className="cell-date-due"><h3>Date Due</h3></td>
+                                    <td className="cell-address"><h3>Property Address</h3></td>
+                                    <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
+                                    <td className="cell-name"><h3>Surveyor</h3></td>
+                                    <td className="cell-edit"><h3>Edit</h3></td>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            {surveys}
+                        </tbody>
+                    </table>
+                </div>
             )
-        })
-        return (
-            <div id="CustomersList">
-                <h2>You&rsquo;re a customer. Thank you for trusting us with your windows. Here are your surveys.</h2>
-                <table>
-                    <thead>
-                        {/* { window.innerWidth < 560 ? (
-                            <>
-                                <tr>
-                                    <td><h3>Date Due</h3></td>
-                                    <td colSpan="2"><h3>Property Address</h3></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Latitude &amp; Longitude</h3></td>
-                                    <td><h3>Surveyor</h3></td>
-                                    <td><h3>Edit</h3></td>
-                                </tr>
-                            </>
-                        ) : ( */}
-                            <tr>
-                                <td className="cell-date-due"><h3>Date Due</h3></td>
-                                <td className="cell-address"><h3>Property Address</h3></td>
-                                <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
-                                <td className="cell-name"><h3>Surveyor</h3></td>
-                                <td className="cell-edit"><h3>Edit</h3></td>
-                            </tr>
-                        {/* ) } */}
-                    </thead>
-                    <tbody>
-                        {surveys}
-                    </tbody>
-                </table>
-            </div>
-        )
+        }
+        else {
+            return (
+                <div id="CustomersList">
+                    <h2>Go to &ldquo;<Link to="/book" title="Book a survey">Book a survey</Link>&rdquo; to sign in!</h2>
+                </div>
+            )
+        }
     }
 }
 
