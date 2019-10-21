@@ -6,7 +6,7 @@ const path = require('path');
 const port = process.env.PORT || 3019;
 
 // Require methods from app.js.
-const { readCustomersSurveys, readSurveyorsSurveys, getCustomerId, getSurveyorId, addSurvey, addCustomer, editSurvey, deleteSurvey } = require('./db')
+const { readCustomersSurveys, readSurveyorsSurveys, getCustomerId, getSurveyorId, addSurvey, addCustomer, editSurvey, deleteSurvey, submitSurvey } = require('./db')
 
 // Define the path where the public files are, as built by React.
 server.use(express.static(path.join(__dirname, "client/build")))
@@ -108,7 +108,7 @@ server.delete("/deletesurvey", async (req,res) => {
 
 
 
-// PUT  /editsurvey
+// PUT  /editsurvey  (customer)
 server.put("/editsurvey", async (req,res) => {
 
     const data = editSurvey(req.body.editSurvey)
@@ -117,6 +117,13 @@ server.put("/editsurvey", async (req,res) => {
 
 })
 
+
+// PUT  /submitsurvey  (surveyor)
+server.put("/submitsurvey", async (req, res) => {
+
+    submitSurvey(req.body.submission)
+    res.send({message: 'Submitted survey'})
+})
 
 
 

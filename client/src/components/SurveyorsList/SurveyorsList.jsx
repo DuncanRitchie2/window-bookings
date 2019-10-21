@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom';
 
 class SurveyorsList extends Component {
     constructor(props) {
@@ -14,7 +15,8 @@ class SurveyorsList extends Component {
                 street: "Birmingham New Street",
                 firstName: "Bernie",
                 lastName: "Sanders"
-            }]
+            }],
+            surveyToOpen: null
         }
     }
 
@@ -31,43 +33,53 @@ class SurveyorsList extends Component {
     }
 
     render() {
-        let surveys = this.state.surveys.map((survey, i)=>{
+        if (this.state.surveyToOpen) {
             return (
-                <tr key={i}>
-                    <td className="cell-date">{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
-                    <td className="cell-address">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
-                    <td className="cell-latlong"><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
-                    <td className="cell-name">{survey.firstName} {survey.lastName}</td>
-                    <td className="cell-edit"><button className="edit-button">Start</button></td>
-                </tr>
-            )
-        })
-        if (!surveys[0]) {
-            surveys = (
-                <tr><td colSpan="5">
-                    You have no surveys!!
-                </td></tr>
+                <Redirect to={"/survey/"+this.state.surveyToOpen} />
             )
         }
-        return (
-            <div id="SurveyorsList">
-                <h2>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}, surveyor extraordinaire! Here are the surveys you&rsquo;re going on.</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <td className="cell-date"><h3>Date Due</h3></td>
-                            <td className="cell-address"><h3>Property Address</h3></td>
-                            <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
-                            <td className="cell-customer"><h3>Customer</h3></td>
-                            <td className="cell-edit"><h3>Start</h3></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {surveys}
-                    </tbody>
-                </table>
-            </div>
-        )
+        else {
+            let surveys = this.state.surveys.map((survey, i)=>{
+                return (
+                    <tr key={i}>
+                        <td className="cell-date">{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
+                        <td className="cell-address">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
+                        <td className="cell-latlong"><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
+                        <td className="cell-name">{survey.firstName} {survey.lastName}</td>
+                        <td className="cell-edit"><button className="edit-button" onClick={()=>{this.setState({surveyToOpen: this.state.surveys[i].id})}}>Start</button></td>
+                    </tr>
+                )
+            })
+            if (!surveys[0]) {
+                surveys = (
+                    <tr>
+                        <td colSpan="5">
+                            You have no surveys!!
+                        </td>
+                    </tr>
+                )
+            }
+            return (
+                <div id="SurveyorsList">
+                    <h2>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}, surveyor extraordinaire! Here are the surveys you&rsquo;re going on.</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td className="cell-date"><h3>Date Due</h3></td>
+                                <td className="cell-address"><h3>Property Address</h3></td>
+                                <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
+                                <td className="cell-customer"><h3>Customer</h3></td>
+                                <td className="cell-edit"><h3>Start</h3></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {surveys}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+        
     }
 }
 

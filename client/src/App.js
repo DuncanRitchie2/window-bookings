@@ -6,6 +6,7 @@ import CustomersList from './components/CustomersList/CustomersList';
 import SurveyorsList from './components/SurveyorsList/SurveyorsList';
 import CustomerLogin from './components/CustomerLogin/CustomerLogin';
 import SurveyorLogin from './components/SurveyorLogin/SurveyorLogin';
+import SurveyForm from './components/SurveyForm/SurveyForm';
 import FourOFour from './components/FourOFour/FourOFour';
 import './App.css';
 
@@ -64,12 +65,15 @@ class App extends Component {
                             </Route>
 
                             <Route path="/list">
-                            {this.state.customer.id ? <CustomersList customer={this.state.customer} /> : <CustomerLogin changeCustomer={this.changeCustomer} customer={this.state.customer} />}
+                                {this.state.customer.id ? <CustomersList customer={this.state.customer} /> : <CustomerLogin changeCustomer={this.changeCustomer} customer={this.state.customer} />}
                             </Route>
 
                             <Route path="/surveyor">
                                 {this.state.surveyor.id ? <SurveyorsList surveyor={this.state.surveyor} /> : <SurveyorLogin changeSurveyor={this.changeSurveyor} surveyor={this.state.surveyor} />}
-                                
+                            </Route>
+
+                            <Route path="/survey/:id">
+                                <SurveyForm surveyor={this.state.surveyor} />
                             </Route>
 
                             <Route path="/" exact>

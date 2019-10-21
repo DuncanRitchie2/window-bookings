@@ -31,6 +31,8 @@ class SurveyForm extends Component {
 
     componentDidMount() {
         // INSERT CODE HERE FOR GETTING PREMISES INFO FROM DATABASE AND SETTING STATE.
+
+        // The survey_id is 
     }
 
     updateStyle(e) {
@@ -57,7 +59,7 @@ class SurveyForm extends Component {
         let {style, windowsCount} = this.state;
 
         if (style && windowsCount) {
-            alert("Thank you "+this.props.surveyor.firstName+" for submitting the survey!")
+            alert("Thank you "+this.props.surveyor.first_name+" for submitting the survey!")
 
             console.log("Adding a survey!")
 
@@ -66,22 +68,22 @@ class SurveyForm extends Component {
                 method:"POST",
                 headers: { "content-type" : "application/json" },
                 body: JSON.stringify({
-                    premises: this.state
+                    submission: this.state
                 })
             })
         
             let result = await response.json()
             console.log(result)
 
-            if (result) {
+            // if (result) {
                 // Redirect to SurveyorsList.
                 this.setState({
                     redirectToSurveyorsList: true
                 })
-            }
-            else {
-                alert("Error in submitting survey! Please try again!")
-            }
+            // }
+            // else {
+            //     alert("Error in submitting survey! Please try again!")
+            // }
             
         }
         else {
@@ -97,25 +99,15 @@ class SurveyForm extends Component {
         }
         return (
             <div id="SurveyForm">
-                <h2>{ this.props.surveyor.first_name ? <>Thank you for choosing us again, {this.props.customer.first_name} {this.props.customer.last_name}! </> : null } Book a new survey.</h2>
+                <h2>{ this.props.surveyor.first_name ? <>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}! </> : null } Complete this survey.</h2>
                 <form>
-                    <h3>What&rsquo;s your name?</h3>
-                    <label htmlFor="firstName">Your first name</label>
-                    <input id="firstName" value={this.state.inputValues.firstName} onChange={this.updateInputValue}/><br />
-                    <label htmlFor="lastName">Your last name</label>
-                    <input id="lastName" value={this.state.inputValues.lastName} onChange={this.updateInputValue} /><br />
-                    <h3>Where will we be surveying?</h3>
-                    <label htmlFor="propertyAddress">Address first line</label>
-                    <input id="propertyAddress" value={this.state.inputValues.propertyAddress} onChange={this.updateInputValue} /><br />
-                    <label htmlFor="propertyTown">Town</label>
-                    <input id="propertyTown" value={this.state.inputValues.propertyTown} onChange={this.updateInputValue} /><br />
-                    <label htmlFor="propertyCountry">Country</label>
-                    <input id="propertyCountry" value={this.state.inputValues.propertyCountry} onChange={this.updateInputValue} /><br />
-                    <h3>When do you want us to come?</h3>
-                    <label htmlFor="surveyDate">Preferred date</label>
-                    <input id="surveyDate" type="date" value={this.state.inputValues.surveyDate} onChange={this.updateInputValue} /><br />
-                    <label htmlFor="surveyTime">Preferred time</label>
-                    <input id="surveyTime" type="time" value={this.state.inputValues.surveyTime} onChange={this.updateInputValue} /><br />
+                    <h3>Premises information</h3>
+
+                    <label htmlFor="style">Architectural style</label>
+                    <input id="style" value={this.state.style} onChange={this.updateStyle}/><br />
+                    <label htmlFor="windows-count">Number of windows</label>
+                    <input id="windows-count" value={this.state.windowsCount} onChange={this.updateWindowsCount} /><br />
+
                     <button id="book-submit-button" onClick={this.submit}>Submit</button>
                 </form>
             </div>

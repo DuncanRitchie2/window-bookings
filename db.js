@@ -344,6 +344,40 @@ const deleteSurvey = async (survey) => {
 }
 
 
+// Submit/edit a survey as a surveyor.
+const submitSurvey = async (survey) => {
+    try {
+        // WRITE CODE THAT INSERTS DATA INTO THE DATABASE IN THE CORRECT TABLES.
+
+        // THE PARAMETER OBJECT survey LOOKS LIKE THIS:
+        // survey = {
+        //     style: "Georgian",
+        //     windowsCount: 2,
+        //     windows: [
+        //         {
+        //             description: "Front window",
+        //             height: 1.2,
+        //             width: 0.6,
+        //             url: "htttps://www.duncanritchie.co.uk/windows/photo-of-front-window.jpg"
+        //         },
+        //         {
+        //             description: "Side window",
+        //             height: 1.8,
+        //             width: 1.2,
+        //             url: "htttps://www.duncanritchie.co.uk/windows/photo-of-side-window.jpg"
+        //         }
+        //     ]
+        // }
+            
+
+        return "Survey details were received on the backend, but the relevant MySql commands have not been written."
+    }
+    catch (error) {
+        console.log('submit survey error')
+        console.log(error.sqlMessage)
+    }
+}
+
 
 module.exports = {
     readCustomersSurveys,
@@ -353,7 +387,8 @@ module.exports = {
     addSurvey,
     addCustomer,
     editSurvey,
-    deleteSurvey
+    deleteSurvey,
+    submitSurvey
 }
 
 
