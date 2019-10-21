@@ -75,13 +75,13 @@ class CustomersList extends Component {
                     <h2>Hello, {this.props.customer.first_name} {this.props.customer.last_name}! Here are the surveys you have booked as a customer.</h2>
                     <table>
                         <thead>
-                                <tr>
-                                    <td className="cell-date-due"><h3>Date Due</h3></td>
-                                    <td className="cell-address"><h3>Property Address</h3></td>
-                                    <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
-                                    <td className="cell-name"><h3>Surveyor</h3></td>
-                                    <td className="cell-edit"><h3>Edit</h3></td>
-                                </tr>
+                            <tr>
+                                <td className="cell-date-due"><h3>Date Due</h3></td>
+                                <td className="cell-address"><h3>Property Address</h3></td>
+                                <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
+                                <td className="cell-name"><h3>Surveyor</h3></td>
+                                <td className="cell-edit"><h3>Edit</h3></td>
+                            </tr>
                         </thead>
                         <tbody>
                             {surveys}
