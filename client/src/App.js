@@ -4,6 +4,7 @@ import Home from './components/Home/Home';
 import Book from './components/Book/Book';
 import CustomersList from './components/CustomersList/CustomersList';
 import SurveyorsList from './components/SurveyorsList/SurveyorsList';
+import CustomerLogin from './components/CustomerLogin/CustomerLogin';
 import SurveyorLogin from './components/SurveyorLogin/SurveyorLogin';
 import FourOFour from './components/FourOFour/FourOFour';
 import './App.css';
@@ -63,7 +64,7 @@ class App extends Component {
                             </Route>
 
                             <Route path="/list">
-                                <CustomersList customer={this.state.customer} changeCustomer={this.changeCustomer} />
+                            {this.state.customer.id ? <CustomersList customer={this.state.customer} /> : <CustomerLogin changeCustomer={this.changeCustomer} customer={this.state.customer} />}
                             </Route>
 
                             <Route path="/surveyor">

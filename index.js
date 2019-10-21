@@ -65,11 +65,10 @@ server.post("/signup", async (req,res) => {
 })
 
 
-// GET   /signin
-server.get("/signin", async (req,res) => {
+// GET   /signincustomer
+server.get("/signincustomer", async (req,res) => {
     console.log("req.query:")
     console.table(req.query)
-    // const data = 3
     const data = await getCustomerId(req.query.first, req.query.last)
     console.log("index.js has received a customer_id of "+data)  
     res.send({"id": data})  // returns id of customer or null
