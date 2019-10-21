@@ -42,6 +42,13 @@ class SurveyorsList extends Component {
                 </tr>
             )
         })
+        if (!surveys[0]) {
+            surveys = (
+                <tr><td colSpan="5">
+                    You have no surveys!!
+                </td></tr>
+            )
+        }
         return (
             <div id="SurveyorsList">
                 <h2>Hello {this.props.surveyor.first_name} {this.props.surveyor.last_name}, surveyor extraordinaire. Here are the surveys you&rsquo;re going on.</h2>

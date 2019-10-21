@@ -52,11 +52,13 @@ create table surveyors(
     id int primary key auto_increment not null unique
 );
 insert into surveyors(firstName, lastName, phoneNumber, emailAddress, lastLatitude, lastLongitude) values
-	("Beyonce","Knowles","0101244000001","queenbey@duncanritchie.co.uk", 34.0833, -118.4478),
+	("Beyoncé","Knowles","0101244000001","queenbey@duncanritchie.co.uk", 34.0833, -118.4478),
 	("Sam","Smith","4401244000002","samsmith@duncanritchie.co.uk", 51.4730, -0.3050),
 	("Declan","McKenna","4401244000003","declan-mckenna@duncanritchie.co.uk", 12.8163, 45.0025),
 	("Camila","Cabello","0101244000004","camila.cabello@duncanritchie.co.uk", 23.1508, -82.3560),
-	("George","Ezra","4401244000005","ezra@duncanritchie.co.uk", 47.4908, 19.0490)
+	("George","Ezra","4401244000005","ezra@duncanritchie.co.uk", 47.4908, 19.0490),
+    ("Owl","City","0101244000006","fireflies@duncanritchie.co.uk", -18, 179),
+	("Ed","Sheeran","4401244000007","edsheeran@duncanritchie.co.uk",53.2698,-9.0534)
 ;
 -- select * from surveyors;
 
@@ -171,4 +173,4 @@ insert into photos(survey_id, window_id, url) values
 
 select * from photos join surveys on surveys.id = photos.survey_id join windows on windows.id = photos.window_id join premises on premises.id = windows.premises_id join customers on customers.id = surveys.customer_id join surveyors on surveyors.id = surveys.surveyor_id;
 
-SELECT surveys.id, customer_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN surveyors ON surveyors.id=surveys.surveyor_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=4;
+SELECT surveys.id, customer_id, customers.firstName, customers.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=4;
