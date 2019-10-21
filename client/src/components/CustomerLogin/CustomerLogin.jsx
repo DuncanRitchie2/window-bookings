@@ -9,7 +9,7 @@ class CustomerLogin extends Component {
                 firstName: "",
                 lastName: ""
             },
-            redirectToCustomerList: false
+            redirectToCustomersList: false
         }
         this.updateInputValue = this.updateInputValue.bind(this);
         this.submit = this.submit.bind(this);
@@ -38,18 +38,15 @@ class CustomerLogin extends Component {
             console.log(result)
 
             if (await result.id) {
-                // Update customer_id with the new value.
+                // Update customer object with the new values.
                 this.props.changeCustomer(result.id, inputValues.firstName, inputValues.lastName)
+
+                // Because there is now a customer.id, the view changes to CustomersList.
             }
 
             else {
                 alert("No customer found with the name "+inputValues.firstName+" "+inputValues.lastName+"!")
             }
-
-            // // Redirect to CustomerList.
-            // this.setState({
-            //     redirectToCustomerList: true
-            // })
         }
         else {
             alert("Please fill in both values.")
@@ -57,7 +54,7 @@ class CustomerLogin extends Component {
     }
 
     render() {
-        if (this.state.redirectToCustomerList) {
+        if (this.state.redirectToCustomersList) {
             return (
                 <Redirect to='/list' />
             )

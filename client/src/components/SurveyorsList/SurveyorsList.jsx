@@ -51,7 +51,7 @@ class SurveyorsList extends Component {
         }
         return (
             <div id="SurveyorsList">
-                <h2>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}, surveyor extraordinaire. Here are the surveys you&rsquo;re going on.</h2>
+                <h2>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}, surveyor extraordinaire! Here are the surveys you&rsquo;re going on.</h2>
                 <table>
                     <thead>
                         <tr>

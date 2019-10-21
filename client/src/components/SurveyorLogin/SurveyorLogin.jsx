@@ -36,8 +36,10 @@ class SurveyorLogin extends Component {
             console.log(result)
 
             if (await result.id) {
-                // Update customer_id with the new value.
+                // Update surveyor object with the new values.
                 this.props.changeSurveyor(result.id, inputValues.firstName, inputValues.lastName)
+
+                // Because there is now a surveyor.id, the view changes to SurveyorsList.
             }
 
             else {
