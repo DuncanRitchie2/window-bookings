@@ -72,7 +72,7 @@ class CustomersList extends Component {
 
             return (
                 <div id="CustomersList">
-                    <h2>Hello {this.props.customer.first_name} {this.props.customer.last_name}! Here are the surveys you have booked as a customer.</h2>
+                    <h2>Hello, {this.props.customer.first_name} {this.props.customer.last_name}! Here are the surveys you have booked as a customer.</h2>
                     <table>
                         <thead>
                                 <tr>
