@@ -32,7 +32,7 @@ html,body {
 }
 
 main {
-    padding-bottom: 54px; /* This is the height of navbar on desktop */
+    padding-bottom: 61px; /* This is the height of navbar on desktop, plus 15px */
 }
 
 h1 {
@@ -174,7 +174,7 @@ nav a:hover,.nav-link-current:hover {
     }
 
     main {
-        padding-bottom: 192px;
+        padding-bottom: 197px; /* This is the height of navbar on mobile, plus 15px */
     }
 
     table {
@@ -270,9 +270,4 @@ nav a:hover,.nav-link-current:hover {
         border-bottom: 3px solid var(--pale-blue);
     }
 
-    /* nav a:hover,.nav-link-current:hover {
-        border-radius: 0 6px 6px 0;
-        border: 3px solid var(--pale-blue);
-        border-left: 3px solid rgba(0,0,0,0);
-    } */
 }
