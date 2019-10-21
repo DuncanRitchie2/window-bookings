@@ -89,6 +89,36 @@ const readSurveyorsSurveys = async (surveyor_id) => {
 }
 
 
+// Return an ID for a surveyor name.
+
+const getSurveyorId = async (firstNameGiven, lastNameGiven) => {
+    console.log("Testing whether "+firstNameGiven+" "+lastNameGiven+" is registered as a surveyor")
+    
+    try {
+        //MySql Query
+        const queryString = `SELECT id FROM surveyors WHERE firstName='${firstNameGiven}' && lastName='${lastNameGiven}';`
+        
+        let data = await promisifiedQuery(queryString)
+
+        if(data[0] !== undefined){
+            console.log(`Surveyor ${firstNameGiven} ${lastNameGiven} exists in database`)
+            console.log("The surveyor_id is "+data[0].id)
+            return data[0].id
+        }
+        else{
+            console.log(`Surveyor ${firstNameGiven} ${lastNameGiven} doesn't exist in database`)
+            console.log("The surveyor_id is null")
+            return null
+        }
+
+    } catch (error) {
+        console.log('is Surveyor Registered error')
+        console.log('The error message is '+error.sqlMessage)
+    }
+
+    // connection.end()
+}
+
 // Check if the customer is actually signed-up
 
 const getCustomerId = async (firstNameGiven, lastNameGiven) => {
@@ -319,6 +349,7 @@ module.exports = {
     readCustomersSurveys,
     readSurveyorsSurveys,
     getCustomerId,
+    getSurveyorId,
     addSurvey,
     addCustomer,
     editSurvey,

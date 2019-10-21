@@ -61,26 +61,19 @@ class Book extends Component {
             let result = await response.json()
             console.log(result)
 
-            // Update customer_id with the new value.
-            this.props.changeCustomer(result.customer_id, inputValues.firstName, inputValues.lastName)
+            if (result.customer_id) {
+                // Update customer_id with the new value.
+                this.props.changeCustomer(result.customer_id, inputValues.firstName, inputValues.lastName)
 
-            // Refresh state. View changes anyway, so this doesn't actually matter.
-            this.setState({
-                inputValues: {
-                    firstName: "",
-                    lastName: "",
-                    propertyAddress: "",
-                    propertyTown: "",
-                    propertyCountry: "UK",
-                    surveyDate: "",
-                    surveyTime: "09:00"
-                }
-            })
-
-            // Redirect to CustomerList.
-            this.setState({
-                redirectToCustomerList: true
-            })
+                // Redirect to CustomerList.
+                this.setState({
+                    redirectToCustomerList: true
+                })
+            }
+            else {
+                alert("Error in submitting booking! Please try again!")
+            }
+            
         }
         else {
             alert("Please fill in all values.")

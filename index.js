@@ -6,7 +6,7 @@ const path = require('path');
 const port = process.env.PORT || 3019;
 
 // Require methods from app.js.
-const { readCustomersSurveys, readSurveyorsSurveys, getCustomerId, addSurvey, addCustomer, editSurvey, deleteSurvey } = require('./db')
+const { readCustomersSurveys, readSurveyorsSurveys, getCustomerId, getSurveyorId, addSurvey, addCustomer, editSurvey, deleteSurvey } = require('./db')
 
 // Define the path where the public files are, as built by React.
 server.use(express.static(path.join(__dirname, "client/build")))
@@ -59,7 +59,7 @@ server.get("/readsurveyorssurveys", async (req,res) => {
 
 // POST   /register
 server.post("/signup", async (req,res) => {
-    const data = await addCustomer(req.body.addCustomer)   // addCustomer = {username:'fffffffff', email:'xxxxx@qqqq.com'}
+    const data = await addCustomer(req.body.addCustomer)
     console.log(data) // 1 if row added
     res.send({"message": data})
 })
@@ -72,7 +72,17 @@ server.get("/signin", async (req,res) => {
     // const data = 3
     const data = await getCustomerId(req.query.first, req.query.last)
     console.log("index.js has received a customer_id of "+data)  
-    res.send({"id": data})  // returns id of user or null
+    res.send({"id": data})  // returns id of customer or null
+})
+
+
+// GET   /signinsurveyor
+server.get("/signinsurveyor", async (req,res) => {
+    console.log("req.query:")
+    console.table(req.query)
+    const data = await getSurveyorId(req.query.first, req.query.last)
+    console.log("index.js has received a surveyor_id of "+data)  
+    res.send({"id": data})  // returns id of surveyor or null
 })
 
 

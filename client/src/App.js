@@ -4,6 +4,7 @@ import Home from './components/Home/Home';
 import Book from './components/Book/Book';
 import CustomersList from './components/CustomersList/CustomersList';
 import SurveyorsList from './components/SurveyorsList/SurveyorsList';
+import SurveyorLogin from './components/SurveyorLogin/SurveyorLogin';
 import FourOFour from './components/FourOFour/FourOFour';
 import './App.css';
 
@@ -17,17 +18,17 @@ class App extends Component {
                 first_name: "",
                 last_name: ""
             },
-            // surveyor: {
-            //     id: null,
-            //     first_name: "",
-            //     last_name: ""
-            // }
-            // ,
             surveyor: {
-                id: 4,
-                first_name: "Camila",
-                last_name: "Cabello"
+                id: null,
+                first_name: "",
+                last_name: ""
             }
+            // ,
+            // surveyor: {
+            //     id: 4,
+            //     first_name: "Camila",
+            //     last_name: "Cabello"
+            // }
         }
         this.changeCustomer = this.changeCustomer.bind(this)
         this.changeSurveyor = this.changeSurveyor.bind(this)
@@ -66,7 +67,8 @@ class App extends Component {
                             </Route>
 
                             <Route path="/surveyor">
-                                <SurveyorsList surveyor={this.state.surveyor} changeSurveyor={this.changeSurveyor}/>
+                                {this.state.surveyor.id ? <SurveyorsList surveyor={this.state.surveyor} /> : <SurveyorLogin changeSurveyor={this.changeSurveyor} surveyor={this.state.surveyor} />}
+                                
                             </Route>
 
                             <Route path="/" exact>
