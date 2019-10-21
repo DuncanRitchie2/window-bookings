@@ -46,7 +46,7 @@ class App extends Component {
             <div className="App">
                 <Router>
                     <header className="App-header">
-                        <h1>Window bookings</h1>
+                        <h1>Window surveys</h1>
                     </header>
                     
                     <main>

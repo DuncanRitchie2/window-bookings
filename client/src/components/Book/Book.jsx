@@ -6,8 +6,8 @@ class Book extends Component {
         super(props)
         this.state = {
             inputValues: {
-                firstName: "",
-                lastName: "",
+                firstName: this.props.customer.first_name || "",
+                lastName: this.props.customer.last_name || "",
                 propertyAddress: "",
                 propertyTown: "",
                 propertyCountry: "UK",
@@ -95,7 +95,7 @@ class Book extends Component {
         }
         return (
             <div id="Book">
-                <h2>Book a new survey</h2>
+                <h2>{ this.props.customer.first_name ? <>Thank you for choosing us again, {this.props.customer.first_name} {this.props.customer.last_name}! </> : null } Book a new survey.</h2>
                 <form>
                     <h3>What&rsquo;s your name?</h3>
                     <label htmlFor="firstName">Your first name</label>
