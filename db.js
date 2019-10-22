@@ -46,7 +46,7 @@ const readCustomersSurveys = async (customer_id) => {
         // Should read all surveys of the user from sql and 
         // send the entire list to client
 
-        //Mysql Query
+        //MySql query
         const queryString = `SELECT surveys.id, surveyor_id, surveyors.firstName, surveyors.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN surveyors ON surveyors.id = surveys.surveyor_id WHERE customer_id=${customer_id} ORDER BY dateToHappen DESC;`
         let data = await promisifiedQuery(queryString)
 
@@ -71,16 +71,16 @@ const readSurveyorsSurveys = async (surveyor_id) => {
         // Should read all surveys of the user from sql and 
         // send the entire list to client
 
-        //MySql Query
+        //MySql query
         const queryString = `SELECT surveys.id, customer_id, customers.firstName, customers.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen, status FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=${surveyor_id} ORDER BY dateToHappen DESC;`
         let data = await promisifiedQuery(queryString)
 
-        console.log('readSurveyorSurvey SQL query')
+        console.log('readSurveyorsSurveys Sql query')
         console.log(data)
         return(data) // returns an array of objects.
 
     } catch (error) {
-        console.log('readSurveyorsSurvey error')
+        console.log('readSurveyorsSurveys error')
         console.log(error.sqlMessage)
         return("error")
     }
@@ -300,19 +300,37 @@ const addPremises = async (address, town, country) => {
 
 // Edit a booking as a customer.
 const editBooking = async (submission, survey_id, customer_id) => {
+    console.log("Hello from db.editBooking()!")
 
     try {
         let { propertyAddress, propertyTown, propertyCountry, surveyDate, surveyTime } = submission
-        const dateToHappen = surveyDate+" "+surveyTime+":00";
-
-        // Mysql Query
-        const queryString = `UPDATE surveys set dateToHappen='${dateToHappen}' where id=${survey_id} && customer_id=${customer_id};`
-        let data = await promisifiedQuery(queryString)
         
-        console.log(data)
+        let premises_id = await getPremisesId(propertyAddress, propertyTown, propertyCountry)
+        console.log("premises_id: "+premises_id)
+        if (!premises_id) {
+            addPremises(propertyAddress, propertyTown, propertyCountry)
+            premises_id = await getPremisesId(propertyAddress, propertyTown, propertyCountry)
+            console.log("premises_id: "+premises_id)
+        }
 
-        console.log('Edit survey via SQL query')
-        //return(data)
+        console.log("customer_id: "+customer_id)
+        console.log("survey_id: "+survey_id)
+        if (customer_id && survey_id && premises_id) {
+            const dateToHappen = surveyDate+" "+surveyTime+":00";
+
+            // MySql query
+            const query = `UPDATE surveys SET premises_id='${premises_id}' AND dateToHappen='${dateToHappen}' WHERE id=${survey_id} AND customer_id=${customer_id};`
+            let data = await promisifiedQuery(query)
+            
+            console.log(data)
+
+            console.log('Edit booking via SQL queries')
+        }
+        else {
+            console.log("Error: customer_id, survey_id, and premises_id are not all defined")
+        }
+        
+        // return(data)
 
     } catch (error) {
         console.log('Edit survey error')
@@ -330,7 +348,7 @@ const deleteSurvey = async (survey) => {
 
         // MySql Query
         
-        const queryString = `DELETE FROM surveys WHERE id=${survey_id} && user_id=${user_id};`
+        const queryString = `DELETE FROM surveys WHERE id=${survey_id} AND user_id=${user_id};`
         let data = await promisifiedQuery(queryString)
         
         console.log('delete survey via SQL query')

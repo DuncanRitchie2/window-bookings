@@ -108,6 +108,7 @@ class EditBooking extends Component {
         return (
             <div id="EditBooking">
                 <h2>{ this.props.customer.first_name ? <>Hello, {this.props.customer.first_name} {this.props.customer.last_name}! </> : null } You are editing a booking.</h2>
+                <p>(You can change the date and time, but changing the address might fail.)</p>
                 <form>
                     <h3>Where will we be surveying?</h3>
                     <label htmlFor="propertyAddress">Address first line</label>
