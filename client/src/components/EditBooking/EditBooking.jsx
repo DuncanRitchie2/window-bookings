@@ -73,7 +73,7 @@ class EditBooking extends Component {
             console.table(inputValues)
 
             // Send data to backend
-            let response = await fetch("/editbooking",{
+            let response = await fetch("http://localhost:3019/editbooking",{
                 method:"POST",
                 headers: { "content-type" : "application/json" },
                 body: JSON.stringify({
@@ -86,7 +86,7 @@ class EditBooking extends Component {
             let result = await response.json()
             console.log(result)
 
-            alert("Thank you "+this.props.surveyor.first_name+" for submitting the survey!")
+            alert("Thank you "+this.props.customer.first_name+" for submitting the survey!")
 
                 // Redirect to CustomersList.
                 this.setState({

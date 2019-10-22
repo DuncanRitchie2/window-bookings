@@ -108,8 +108,8 @@ server.delete("/deletesurvey", async (req,res) => {
 
 
 
-// PUT  /editbooking  (customer)
-server.put("/editbooking", async (req, res) => {
+// POST  /editbooking  (customer)
+server.post("/editbooking", async (req, res) => {
 
     const data = editBooking(req.body.submission, req.body.survey_id, req.body.customer_id)
     console.log(data)
