@@ -135,6 +135,7 @@ insert into surveys(customer_id, surveyor_id, premises_id, status, dateToHappen)
 create table windows(
 	premises_id int,
     description varchar(255),
+    deleted bool default false,
     id int primary key auto_increment not null unique,
     foreign key(premises_id) references premises(id)
 );
