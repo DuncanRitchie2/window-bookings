@@ -46,7 +46,7 @@ class SurveyorsList extends Component {
                         <td className="cell-address">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
                         <td className="cell-latlong"><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
                         <td className="cell-name">{survey.firstName} {survey.lastName}</td>
-                        <td className="cell-edit"><button className="edit-button" onClick={()=>{this.setState({surveyToOpen: this.state.surveys[i].id})}}>Start</button></td>
+                        <td className="cell-edit"><button className="edit-button" onClick={()=>{this.setState({surveyToOpen: this.state.surveys[i].id})}}>{this.state.surveys[i].status==="complete" ? "Change" : "Start"}</button></td>
                     </tr>
                 )
             })
@@ -61,7 +61,7 @@ class SurveyorsList extends Component {
             }
             return (
                 <div id="SurveyorsList">
-                    <h2>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}, surveyor extraordinaire! Here are the surveys you&rsquo;re going on.</h2>
+                    <h2>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}, surveyor extraordinaire! Here are the surveys you&rsquo;re going on or have been on.</h2>
                     <table>
                         <thead>
                             <tr>
@@ -69,7 +69,7 @@ class SurveyorsList extends Component {
                                 <td className="cell-address"><h3>Property Address</h3></td>
                                 <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
                                 <td className="cell-customer"><h3>Customer</h3></td>
-                                <td className="cell-edit"><h3>Start</h3></td>
+                                <td className="cell-edit"><h3>Action</h3></td>
                             </tr>
                         </thead>
                         <tbody>

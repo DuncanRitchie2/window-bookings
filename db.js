@@ -72,7 +72,7 @@ const readSurveyorsSurveys = async (surveyor_id) => {
         // send the entire list to client
 
         //MySql Query
-        const queryString = `SELECT surveys.id, customer_id, customers.firstName, customers.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=${surveyor_id} ORDER BY dateToHappen DESC;`
+        const queryString = `SELECT surveys.id, customer_id, customers.firstName, customers.lastName, premises_id, houseNumber, street, town, country, postCode, latitude, longitude, dateToHappen, status FROM surveys JOIN premises ON premises.id=surveys.premises_id JOIN customers ON customers.id = surveys.customer_id WHERE surveyor_id=${surveyor_id} ORDER BY dateToHappen DESC;`
         let data = await promisifiedQuery(queryString)
 
         console.log('readSurveyorSurvey SQL query')
@@ -119,7 +119,7 @@ const getSurveyorId = async (firstNameGiven, lastNameGiven) => {
     // connection.end()
 }
 
-// Check if the customer is actually signed-up
+// Returns a customer_id if the customer already exists.
 
 const getCustomerId = async (firstNameGiven, lastNameGiven) => {
     console.log("Testing whether "+firstNameGiven+" "+lastNameGiven+" is registered")
@@ -344,31 +344,71 @@ const deleteSurvey = async (survey) => {
 }
 
 
+//
+const readPremises = async (survey_id) => {
+    try {
+        const premisesQuery = `SELECT * FROM premises JOIN surveys ON premises.id = surveys.premises_id WHERE surveys.id = ${survey_id}`
+        let premisesData = await promisifiedQuery(premisesQuery)
+
+        const windowsCountQuery = `SELECT COUNT(*) AS "count" FROM windows WHERE premises_id = (SELECT premises_id FROM surveys WHERE id = ${survey_id})`
+        let windowsCountData = await promisifiedQuery(windowsCountQuery)
+        let windowsCount = await windowsCountData[0].count
+
+        console.table(windowsCountData)
+
+        console.log("The premises has "+windowsCount+" windows.")
+
+        return {
+            "premises": premisesData[0],
+            "windowsCount": windowsCount
+        }
+    }
+    catch (error) {
+        console.log('read premises error')
+        console.log(error.sqlMessage)
+    }
+}
+
+
 // Submit/edit a survey as a surveyor.
-const submitSurvey = async (survey) => {
+const submitSurvey = async (submission, survey_id, surveyor_id) => {
     try {
         // WRITE CODE THAT INSERTS DATA INTO THE DATABASE IN THE CORRECT TABLES.
 
-        // THE PARAMETER OBJECT survey LOOKS LIKE THIS:
-        // survey = {
-        //     style: "Georgian",
-        //     windowsCount: 2,
-        //     windows: [
-        //         {
-        //             description: "Front window",
-        //             height: 1.2,
-        //             width: 0.6,
-        //             url: "htttps://www.duncanritchie.co.uk/windows/photo-of-front-window.jpg"
-        //         },
-        //         {
-        //             description: "Side window",
-        //             height: 1.8,
-        //             width: 1.2,
-        //             url: "htttps://www.duncanritchie.co.uk/windows/photo-of-side-window.jpg"
-        //         }
-        //     ]
-        // }
-            
+        // THE PARAMETER OBJECT submission LOOKS LIKE THIS:
+        //     submission: {
+        //         style: "Georgian",
+        //         windowsCount: 2,
+        //         windows: [
+        //             {
+        //                 description: "Front window",
+        //                 height: 1.2,
+        //                 width: 0.6,
+        //                 url: "htttps://www.duncanritchie.co.uk/windows/photo-of-front-window.jpg"
+        //             },
+        //             {
+        //                 description: "Side window",
+        //                 height: 1.8,
+        //                 width: 1.2,
+        //                 url: "htttps://www.duncanritchie.co.uk/windows/photo-of-side-window.jpg"
+        //             }
+        //         ]
+        //     }
+        // THE PARAMETER survey_id IS AN INTEGER.
+        
+        console.log("db.submitSurvey() has received a submission of...")
+        console.table(submission)
+        console.log("... for a survey_id of "+survey_id)
+        console.log("... and a surveyor_id of "+surveyor_id)
+
+        const statusQuery = `UPDATE surveys SET status = "complete" WHERE id=${survey_id} && surveyor_id=${surveyor_id};`
+        let statusData = await promisifiedQuery(statusQuery)
+
+        const styleQuery = `update premises set style = "${submission.style}" where id = (select premises_id from surveys where surveys.id = ${survey_id});`
+        let styleData = await promisifiedQuery(styleQuery)
+
+        console.log(statusData)
+        console.log(styleData)
 
         return "Survey details were received on the backend, but the relevant MySql commands have not been written."
     }
@@ -388,6 +428,7 @@ module.exports = {
     addCustomer,
     editSurvey,
     deleteSurvey,
+    readPremises,
     submitSurvey
 }
 

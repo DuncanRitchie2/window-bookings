@@ -52,7 +52,7 @@ class App extends Component {
     
     render() {
         return (
-            <div className="App">
+            <div className="App" lang="en">
                 <Router>
                     <header className="App-header">
                         <h1>Window surveys</h1>
