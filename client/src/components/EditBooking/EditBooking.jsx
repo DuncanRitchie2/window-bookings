@@ -5,28 +5,17 @@ class EditBooking extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            style: "",
-            windowsCount: "",
-            windows: [
-                {
-                    description: "",
-                    height: "",
-                    width: "",
-                    url: ""
-                },
-                {
-                    description: "",
-                    height: "",
-                    width: "",
-                    url: ""
-                }
-            ],
+            inputValues: {
+                propertyAddress: "",
+                propertyTown: "",
+                propertyCountry: "UK",
+                surveyDate: "", // Date is set to tomorrow in componentDidMount().
+                surveyTime: "" || "09:00" // Default time is 9am.
+            },
             infoFromFetch: {},
-            redirectToSurveyorsList: false
+            redirectToCustomersList: false
         }
-        this.updateStyle = this.updateStyle.bind(this);
-        this.updateWindowsCount = this.updateWindowsCount.bind(this);
-        this.updateWindow = this.updateWindow.bind(this);
+        this.updateInputValue = this.updateInputValue.bind(this);
         this.submit = this.submit.bind(this);
     }
 
@@ -34,7 +23,7 @@ class EditBooking extends Component {
         // Gets premises info from database and sets state.
 
         const survey_id = this.props.match.params.id
-        console.log("Fetching data for survey_id "+survey_id+"!")
+        console.log("Fetching premises data for survey_id "+survey_id+"!")
         const response = await fetch('http://localhost:3019/readpremises?survey_id='+survey_id);
         const responseJson = await response.json();
         console.table(responseJson.data.premises);
@@ -46,26 +35,30 @@ class EditBooking extends Component {
         });
     }
 
+    async readBooking() {
+        // Gets booking info from database and sets state.
+
+        const survey_id = this.props.match.params.id
+        const customer_id = this.props.customer.id
+        console.log("Fetching booking data for survey_id "+survey_id+" and customer_id "+customer_id+"!")
+        const response = await fetch('http://localhost:3019/readbooking?survey_id='+survey_id+"&customer_id="+customer_id);
+        const responseJson = await response.json();
+        console.table(responseJson.data.premises);
+        // this.setState({
+        //     inputValues: responseJson.data.premises
+        // });
+    }
+
+    updateInputValue(e) {
+        // Whenever an input is changed, the state is updated.
+        let inputValues = this.state.inputValues;
+        inputValues[e.target.id] = e.target.value;
+        this.setState({inputValues})
+    }
+
     async componentDidMount() {
-        this.readPremises();
-    }
-
-    updateStyle(e) {
-        // Whenever the style input is changed, the state is updated.
-        this.setState({"style": e.target.value})
-    }
-
-    updateWindowsCount(e) {
-        // Whenever the windows-count input is changed, the state is updated.
-        this.setState({"windowsCount": e.target.value})
-    }
-
-    updateWindow(e) {
-        // Whenever an input for a specific window is changed, the state is updated.
-        let windows = this.state.windows
-        let key = e.target.key
-        windows[key][e.target.className] = e.target.value
-        this.setState({"windows": windows})
+        this.readBooking()
+        this.readPremises()
     }
 
     async submit(e) {
@@ -126,17 +119,22 @@ class EditBooking extends Component {
         const {houseName, houseNumber, street, town, country, postCode, latitude, longitude} = this.state.infoFromFetch;
         return (
             <div id="EditBooking">
-                <h2>{ this.props.surveyor.first_name ? <>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}! </> : null } Complete this survey.</h2>
-                <p>The address is {houseName || houseNumber} {street}, {town}, {country}, {postCode}.</p>
+                <h2>{ this.props.customer.first_name ? <>Hello, {this.props.customer.first_name} {this.props.customer.last_name}! </> : null } Edit this booking.</h2>
+                <p>The address is {houseName || houseNumber} {street}, {town}, {country}{postCode ? ", "+postCode : null}.</p>
                 {latitude ? <p>The co-ords are {Math.abs(latitude)}&deg; {latitude<0 ? "south" : "north"}, {Math.abs(longitude)}&deg; {longitude<0 ? "west" : "east"}. </p> : null}
                 <form>
-                    <h3>Premises information</h3>
-
-                    <label htmlFor="style">Architectural style</label>
-                    <input id="style" value={this.state.style} onChange={this.updateStyle}/><br />
-                    <label htmlFor="windows-count">Number of windows</label>
-                    <input id="windows-count" value={this.state.windowsCount} onChange={this.updateWindowsCount} /><br />
-
+                    <h3>Where will we be surveying?</h3>
+                    <label htmlFor="propertyAddress">Address first line</label>
+                    <input id="propertyAddress" value={this.state.inputValues.propertyAddress} onChange={this.updateInputValue} /><br />
+                    <label htmlFor="propertyTown">Town</label>
+                    <input id="propertyTown" value={this.state.inputValues.propertyTown} onChange={this.updateInputValue} /><br />
+                    <label htmlFor="propertyCountry">Country</label>
+                    <input id="propertyCountry" value={this.state.inputValues.propertyCountry} onChange={this.updateInputValue} /><br />
+                    <h3>When do you want us to come?</h3>
+                    <label htmlFor="surveyDate">Preferred date</label>
+                    <input id="surveyDate" type="date" value={this.state.inputValues.surveyDate} onChange={this.updateInputValue} /><br />
+                    <label htmlFor="surveyTime">Preferred time</label>
+                    <input id="surveyTime" type="time" value={this.state.inputValues.surveyTime} onChange={this.updateInputValue} /><br />
                     <button id="book-submit-button" onClick={this.submit}>Submit</button>
                 </form>
             </div>

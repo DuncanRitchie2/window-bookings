@@ -343,8 +343,26 @@ const deleteSurvey = async (survey) => {
     // connection.end()
 }
 
+// Read a booking to be edited as a customer.
+const readBooking = async (survey_id, customer_id) => {
+    try {
+        const premisesQuery = `SELECT * FROM surveys WHERE id = ${survey_id} AND customer_id = ${customer_id}`
+        let premisesData = await promisifiedQuery(premisesQuery)
 
-//
+        console.table(premisesData)
+
+        return {
+            "premises": premisesData[0]
+        }
+    }
+    catch (error) {
+        console.log('read premises error')
+        console.log(error.sqlMessage)
+    }
+}
+
+
+// Read a premises to be edited as a surveyor.
 const readPremises = async (survey_id) => {
     try {
         const premisesQuery = `SELECT * FROM premises JOIN surveys ON premises.id = surveys.premises_id WHERE surveys.id = ${survey_id}`
@@ -373,7 +391,7 @@ const readPremises = async (survey_id) => {
 // Submit/edit a survey as a surveyor.
 const submitSurvey = async (submission, survey_id, surveyor_id) => {
     try {
-        // WRITE CODE THAT INSERTS DATA INTO THE DATABASE IN THE CORRECT TABLES.
+        // FINISH WRITING CODE THAT INSERTS DATA INTO THE DATABASE IN THE CORRECT TABLES.
 
         // THE PARAMETER OBJECT submission LOOKS LIKE THIS:
         //     submission: {
@@ -428,6 +446,7 @@ module.exports = {
     addCustomer,
     editSurvey,
     deleteSurvey,
+    readBooking,
     readPremises,
     submitSurvey
 }

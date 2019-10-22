@@ -64,7 +64,7 @@ class App extends Component {
                             </Route>
 
                             <Route path="/edit/:id">
-                                <EditBooking customer={this.state.customer} />
+                                {this.state.customer.id ? <EditBooking customer={this.state.customer} /> : <CustomerLogin changeCustomer={this.changeCustomer} customer={this.state.customer} />}
                             </Route>
 
                             <Route path="/surveyor">
@@ -72,7 +72,7 @@ class App extends Component {
                             </Route>
 
                             <Route path="/survey/:id">
-                                <SurveyForm surveyor={this.state.surveyor} />
+                                {this.state.surveyor.id ? <SurveyForm surveyor={this.state.surveyor} /> : <SurveyorLogin changeSurveyor={this.changeSurveyor} surveyor={this.state.surveyor} />}
                             </Route>
 
                             <Route path="/" exact>

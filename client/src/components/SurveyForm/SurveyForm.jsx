@@ -127,7 +127,7 @@ class SurveyForm extends Component {
         return (
             <div id="SurveyForm">
                 <h2>{ this.props.surveyor.first_name ? <>Hello, {this.props.surveyor.first_name} {this.props.surveyor.last_name}! </> : null } Complete this survey.</h2>
-                <p>The address is {houseName || houseNumber} {street}, {town}, {country}, {postCode}.</p>
+                <p>The address is {houseName || houseNumber} {street}, {town}, {country}{postCode ? ", "+postCode : null}.</p>
                 {latitude ? <p>The co-ords are {Math.abs(latitude)}&deg; {latitude<0 ? "south" : "north"}, {Math.abs(longitude)}&deg; {longitude<0 ? "west" : "east"}. </p> : null}
                 <form>
                     <h3>Premises information</h3>
