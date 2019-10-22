@@ -346,7 +346,7 @@ const deleteSurvey = async (survey) => {
 // Read a booking to be edited as a customer.
 const readBooking = async (survey_id, customer_id) => {
     try {
-        const premisesQuery = `SELECT * FROM surveys WHERE id = ${survey_id} AND customer_id = ${customer_id}`
+        const premisesQuery = `SELECT * FROM surveys JOIN premises ON premises.id = surveys.premises_id WHERE surveys.id = ${survey_id} AND customer_id = ${customer_id}`
         let premisesData = await promisifiedQuery(premisesQuery)
 
         console.table(premisesData)

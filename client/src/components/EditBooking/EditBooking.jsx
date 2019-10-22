@@ -8,9 +8,9 @@ class EditBooking extends Component {
             inputValues: {
                 propertyAddress: "",
                 propertyTown: "",
-                propertyCountry: "UK",
-                surveyDate: "", // Date is set to tomorrow in componentDidMount().
-                surveyTime: "" || "09:00" // Default time is 9am.
+                propertyCountry: "",
+                surveyDate: "",
+                surveyTime: ""
             },
             infoFromFetch: {},
             redirectToCustomersList: false
@@ -18,23 +18,6 @@ class EditBooking extends Component {
         this.updateInputValue = this.updateInputValue.bind(this);
         this.submit = this.submit.bind(this);
     }
-
-    async readPremises() {
-        // Gets premises info from database and sets state.
-
-        const survey_id = this.props.match.params.id
-        console.log("Fetching premises data for survey_id "+survey_id+"!")
-        const response = await fetch('http://localhost:3019/readpremises?survey_id='+survey_id);
-        const responseJson = await response.json();
-        console.table(responseJson.data.premises);
-        this.setState({
-            // windows: responseJson.data[0].windows,
-            windowsCount: responseJson.data.windowsCount,
-            style: responseJson.data.premises.style,
-            infoFromFetch: responseJson.data.premises
-        });
-    }
-
     async readBooking() {
         // Gets booking info from database and sets state.
 
@@ -43,10 +26,29 @@ class EditBooking extends Component {
         console.log("Fetching booking data for survey_id "+survey_id+" and customer_id "+customer_id+"!")
         const response = await fetch('http://localhost:3019/readbooking?survey_id='+survey_id+"&customer_id="+customer_id);
         const responseJson = await response.json();
-        console.table(responseJson.data.premises);
-        // this.setState({
-        //     inputValues: responseJson.data.premises
-        // });
+        const booking = await responseJson.data.premises;
+
+        if (!booking || booking.customer_id !== customer_id) {
+            this.setState({redirectToCustomersList: true})
+        }
+        else {
+            console.table(booking);
+            const { houseName, houseNumber, street, town, country, dateToHappen } = booking;
+
+            const firstLine = (houseName ? houseName+" "+street : houseNumber+" "+street)
+            const inputValues = {
+                propertyAddress: firstLine,
+                propertyTown: town,
+                propertyCountry: country,
+                surveyDate: dateToHappen.substr(0,10),
+                surveyTime: dateToHappen.substr(11,5)
+            }
+
+            this.setState({
+                infoFromFetch: booking,
+                inputValues: inputValues
+            });
+        }
     }
 
     updateInputValue(e) {
@@ -58,7 +60,6 @@ class EditBooking extends Component {
 
     async componentDidMount() {
         this.readBooking()
-        this.readPremises()
     }
 
     async submit(e) {
@@ -110,18 +111,14 @@ class EditBooking extends Component {
     }
 
     render() {
-        if (this.state.redirectToSurveyorsList) {
+        if (this.state.redirectToCustomersList) {
             return (
-                <Redirect to='/surveyor' />
+                <Redirect to='/list' />
             )
         }
-
-        const {houseName, houseNumber, street, town, country, postCode, latitude, longitude} = this.state.infoFromFetch;
         return (
             <div id="EditBooking">
-                <h2>{ this.props.customer.first_name ? <>Hello, {this.props.customer.first_name} {this.props.customer.last_name}! </> : null } Edit this booking.</h2>
-                <p>The address is {houseName || houseNumber} {street}, {town}, {country}{postCode ? ", "+postCode : null}.</p>
-                {latitude ? <p>The co-ords are {Math.abs(latitude)}&deg; {latitude<0 ? "south" : "north"}, {Math.abs(longitude)}&deg; {longitude<0 ? "west" : "east"}. </p> : null}
+                <h2>{ this.props.customer.first_name ? <>Hello, {this.props.customer.first_name} {this.props.customer.last_name}! </> : null } You are editing a booking.</h2>
                 <form>
                     <h3>Where will we be surveying?</h3>
                     <label htmlFor="propertyAddress">Address first line</label>
