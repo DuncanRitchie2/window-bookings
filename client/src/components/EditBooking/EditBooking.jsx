@@ -45,7 +45,6 @@ class EditBooking extends Component {
             }
 
             this.setState({
-                infoFromFetch: booking,
                 inputValues: inputValues
             });
         }
