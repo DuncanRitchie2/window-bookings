@@ -4,6 +4,7 @@ import Home from './components/Home/Home';
 import Book from './components/Book/Book';
 import CustomersList from './components/CustomersList/CustomersList';
 import SurveyorsList from './components/SurveyorsList/SurveyorsList';
+import EditBooking from './components/EditBooking/EditBooking';
 import CustomerLogin from './components/CustomerLogin/CustomerLogin';
 import SurveyorLogin from './components/SurveyorLogin/SurveyorLogin';
 import SurveyForm from './components/SurveyForm/SurveyForm';
@@ -25,12 +26,6 @@ class App extends Component {
                 first_name: "",
                 last_name: ""
             }
-            // ,
-            // surveyor: {
-            //     id: 4,
-            //     first_name: "Camila",
-            //     last_name: "Cabello"
-            // }
         }
         this.changeCustomer = this.changeCustomer.bind(this)
         this.changeSurveyor = this.changeSurveyor.bind(this)
@@ -66,6 +61,10 @@ class App extends Component {
 
                             <Route path="/list">
                                 {this.state.customer.id ? <CustomersList customer={this.state.customer} /> : <CustomerLogin changeCustomer={this.changeCustomer} customer={this.state.customer} />}
+                            </Route>
+
+                            <Route path="/edit/:id">
+                                <EditBooking customer={this.state.customer} />
                             </Route>
 
                             <Route path="/surveyor">

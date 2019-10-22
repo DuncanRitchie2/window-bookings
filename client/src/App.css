@@ -78,6 +78,8 @@ form input {
     width: 15em;
     font-size: inherit;
     font-family: inherit;
+    border: 1px solid var(--pale-blue);
+    border-radius: 3px;
 }
 
 button {

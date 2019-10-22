@@ -61,7 +61,7 @@ class CustomerLogin extends Component {
         }
         return (
             <div id="CustomerLogin">
-                <h2>{ this.props.customer.first_name ? <>You are signed in as {this.props.customer.first_name} {this.props.customer.last_name}! Switch user?</> : <>Log in as a customer!</>}</h2>
+                <h2>{ this.props.customer.first_name ? <>You are signed in as {this.props.customer.first_name} {this.props.customer.last_name}! Switch user?</> : <>Log in as a customer to see your bookings!</>}</h2>
                 <form>
                     <h3>What&rsquo;s your name?</h3>
                     <label htmlFor="firstName">Your first name</label>

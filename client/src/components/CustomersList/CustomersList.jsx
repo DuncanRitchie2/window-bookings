@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class CustomersList extends Component {
     constructor(props) {
@@ -15,7 +15,8 @@ class CustomersList extends Component {
                 property: "1 Average Street",
                 firstName: "Sam",
                 lastName: "Smith"
-            }]
+            }],
+            surveyToOpen: null
         }
     }
 
@@ -45,57 +46,64 @@ class CustomersList extends Component {
     }
 
     render() {
-        let surveys;
-        console.table(this.props)
-        console.log(this.props.customer.id)
-        if (this.props.customer.id) {
-            surveys = this.state.surveys.map((survey, i)=>{
-                return (
-                        <tr key={i}>
-                            <td className="cell-date">{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
-                            <td className="cell-address">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
-                            <td className="cell-latlong"><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
-                            <td className="cell-name">{survey.firstName} {survey.lastName}</td>
-                            <td className="cell-edit"><button className="edit-button">Edit</button></td>
-                        </tr>
-                    
-                )
-            })
-            console.log(surveys)
-            if (!surveys[0]) {
-                surveys = (
-                    <tr><td colSpan="5">
-                        You have no surveys! Please <Link to="/book" title="Book a survey">book a survey</Link>!
-                    </td></tr>
-                )
-            }
-
+        if (this.state.surveyToOpen) {
             return (
-                <div id="CustomersList">
-                    <h2>Hello, {this.props.customer.first_name} {this.props.customer.last_name}! Here are the surveys you have booked as a customer.</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td className="cell-date-due"><h3>Date Due</h3></td>
-                                <td className="cell-address"><h3>Property Address</h3></td>
-                                <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
-                                <td className="cell-name"><h3>Surveyor</h3></td>
-                                <td className="cell-edit"><h3>Edit</h3></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {surveys}
-                        </tbody>
-                    </table>
-                </div>
+                <Redirect to={"/edit/"+this.state.surveyToOpen} />
             )
         }
         else {
-            return (
-                <div id="CustomersList">
-                    <h2>Go to &ldquo;<Link to="/book" title="Book a survey">Book a survey</Link>&rdquo; to sign in!</h2>
-                </div>
-            )
+            let surveys;
+            console.table(this.props)
+            console.log(this.props.customer.id)
+            if (this.props.customer.id) {
+                surveys = this.state.surveys.map((survey, i)=>{
+                    return (
+                            <tr key={i}>
+                                <td className="cell-date">{survey.dateToHappen.substring(0,10)} {survey.dateToHappen.substring(11,16)}</td>
+                                <td className="cell-address">{survey.houseName || survey.houseNumber} {survey.street || ""}<br />{survey.town}, {survey.country}, {survey.postCode}</td>
+                                <td className="cell-latlong"><a href={`https://www.google.co.uk/maps/search/${survey.latitude}+${survey.longitude}`} title={`View ${survey.houseName} ${survey.houseNumber} ${survey.street} on Google Maps`} target="_blank" rel="noreferrer noopener">{survey.latitude} {survey.longitude}</a></td>
+                                <td className="cell-name">{survey.firstName} {survey.lastName}</td>
+                                <td className="cell-edit"><button className="edit-button" onClick={()=>{this.setState({surveyToOpen: this.state.surveys[i].id})}}>Edit</button></td>
+                            </tr>
+                        
+                    )
+                })
+                console.log(surveys)
+                if (!surveys[0]) {
+                    surveys = (
+                        <tr><td colSpan="5">
+                            You have no surveys! Please <Link to="/book" title="Book a survey">book a survey</Link>!
+                        </td></tr>
+                    )
+                }
+
+                return (
+                    <div id="CustomersList">
+                        <h2>Hello, {this.props.customer.first_name} {this.props.customer.last_name}! Here are the surveys you have booked as a customer.</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td className="cell-date-due"><h3>Date Due</h3></td>
+                                    <td className="cell-address"><h3>Property Address</h3></td>
+                                    <td className="cell-latlong"><h3>Latitude &amp; Longitude</h3></td>
+                                    <td className="cell-name"><h3>Surveyor</h3></td>
+                                    <td className="cell-edit"><h3>Edit</h3></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {surveys}
+                            </tbody>
+                        </table>
+                    </div>
+                )
+            }
+            else {
+                return (
+                    <div id="CustomersList">
+                        <h2>Go to &ldquo;<Link to="/book" title="Book a survey">Book a survey</Link>&rdquo; to sign in!</h2>
+                    </div>
+                )
+            }
         }
     }
 }
