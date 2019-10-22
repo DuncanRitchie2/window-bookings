@@ -35,7 +35,7 @@ class EditBooking extends Component {
             console.table(booking);
             const { houseName, houseNumber, street, town, country, dateToHappen } = booking;
 
-            const firstLine = (houseName ? houseName+" "+street : houseNumber+" "+street)
+            const firstLine = (houseName && houseName!=="null" ? houseName+" "+street : houseNumber+" "+street)
             const inputValues = {
                 propertyAddress: firstLine,
                 propertyTown: town,
@@ -64,27 +64,22 @@ class EditBooking extends Component {
     async submit(e) {
         e.preventDefault();
 
-        let {style, windowsCount} = this.state;
+        const inputValues = this.state.inputValues
+        let {propertyAddress, propertyTown, propertyCountry, surveyDate, surveyTime} = inputValues;
 
-        if (style && windowsCount) {
-            console.log("Attempting to submit a survey!")
+        if (propertyAddress && propertyTown && propertyCountry && surveyDate && surveyTime) {
+            console.log("Attempting to update a survey!")
 
-            let submission = {
-                style: this.state.style,
-                windowsCount: this.state.windowsCount,
-                windows: this.state.windows
-            }
-
-            console.table(submission)
+            console.table(inputValues)
 
             // Send data to backend
-            let response = await fetch("/submitsurvey",{
+            let response = await fetch("/editbooking",{
                 method:"POST",
                 headers: { "content-type" : "application/json" },
                 body: JSON.stringify({
-                    submission: submission,
+                    submission: inputValues,
                     survey_id: this.props.match.params.id,
-                    surveyor_id: this.props.surveyor.id
+                    customer_id: this.props.customer.id
                 })
             })
         
@@ -93,15 +88,10 @@ class EditBooking extends Component {
 
             alert("Thank you "+this.props.surveyor.first_name+" for submitting the survey!")
 
-            // if (result) {
-                // Redirect to SurveyorsList.
+                // Redirect to CustomersList.
                 this.setState({
-                    redirectToSurveyorsList: true
+                    redirectToCustomersList: true
                 })
-            // }
-            // else {
-            //     alert("Error in submitting survey! Please try again!")
-            // }
             
         }
         else {

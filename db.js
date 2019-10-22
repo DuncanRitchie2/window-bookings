@@ -21,7 +21,7 @@ const promisifiedQuery = promisify(connection.query).bind(connection)
 
 
 
-// Methods for addUser, readSurveys, isUserRegistered, addSurvey, editSurvey, deleteSurvey
+// Methods for addUser, readSurveys, isUserRegistered, addSurvey, editBooking, deleteSurvey (and more!)
 
 
 // Get the count of surveyors. Useful in assigning a surveyor to a new survey.
@@ -298,14 +298,15 @@ const addPremises = async (address, town, country) => {
 }
 
 
-// Edit a survey.
-const editSurvey = async (survey) => {
+// Edit a booking as a customer.
+const editBooking = async (submission, survey_id, customer_id) => {
 
     try {
-        let { premises_id, date_due, survey_id, customer_id } = survey
+        let { propertyAddress, propertyTown, propertyCountry, surveyDate, surveyTime } = submission
+        const dateToHappen = surveyDate+" "+surveyTime+":00";
 
         // Mysql Query
-        const queryString = `UPDATE surveys set premises_id='${premises_id}', date_due='${date_due}' where id=${survey_id} && customer_id=${customer_id};`
+        const queryString = `UPDATE surveys set dateToHappen='${dateToHappen}' where id=${survey_id} && customer_id=${customer_id};`
         let data = await promisifiedQuery(queryString)
         
         console.log(data)
@@ -444,7 +445,7 @@ module.exports = {
     getSurveyorId,
     addSurvey,
     addCustomer,
-    editSurvey,
+    editBooking,
     deleteSurvey,
     readBooking,
     readPremises,
