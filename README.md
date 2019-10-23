@@ -1,4 +1,4 @@
-# window-bookings
+# 🏚️🕵️📋 window-bookings
 
 Bookings system for a window-repair company. My apprenticeship project for Information Catalyst under the tutelage of Code Nation.
 
@@ -77,3 +77,13 @@ This is a non-exhaustive list of technologies we use at ICE. If you know any of 
 • Liferay
 
 • GitLab
+
+<h2>My approach</h2>
+
+On the first day of the project, I planned it all out &mdash; I decided my tech stack and which features to prioritise. I settled on using a React front-end (using React Router to handle user navigation), an Express.js server, and a MySql database. 
+
+For this kind of project where it&rsquo;s about showing what I know and what I can do in a limited time, it seemed sensible to stick with what I&rsquo;m familiar with. I know Information Catalyst prefer Angular, but I have no experience with Angular and I&rsquo;m very comfortable with React (excluding React Hooks). (See also: six of my projects on <a href="https://github.com/DuncanRitchie?tab=repositories" title="DuncanRitchie&rsquo;s repositories">my non-apprenticeship account</a>.) I know Information Catalyst prefer Java, and I am getting a lot better acquainted with Java, but I still have more familiarity with Node/Express/JavaScript generally.
+
+For databases, Information Catalyst like to use MongoDB for non-relational and MySql for relational. I&rsquo;m happy with both &mdash; <a href="https://github.com/DuncanRitchie/velut" title="Code for velut.co.uk on GitHub">my Latin dictionary</a> is a big project of mine using MongoDB &mdash; but this project seemed to need a relational database with several tables linking together, so I used MySql.
+
+I spent three days setting up the database. The six tables I created are customers, surveyors, premises, surveys (which links to the first three tables), windows (which links to premises), and photos (which links to surveys and windows). I knew I wouldn&rsquo;t be able to implement all the features suggested in the brief; nonetheless, I felt I should make the database as comprehensive as possible before writing any HTML or JavaScript, so that I would be able to build whatever front-end and middle-ware I wanted without changing the MySql schemata and potentially dropping and re-creating the database.
