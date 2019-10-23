@@ -246,7 +246,7 @@ nav a:hover,.nav-link-current:hover {
 
 
     nav {
-        background-image: linear-gradient(var(--white), var(--pale-blue))
+        background-image: linear-gradient(var(--white), var(--pale-blue));
     }
 
     nav ul {
@@ -256,21 +256,21 @@ nav a:hover,.nav-link-current:hover {
     }
 
     nav ul li {
-        padding-top: 12px;
-        padding-bottom: 12px;
+        padding-top: 9px;
+        padding-bottom: 9px;
         text-align: left;
 
     }
 
     nav ul li a {
         border-radius: 0 6px 6px 0;
-        border: 3px solid rgba(0,0,0,0);
-        border-left: 3px solid rgba(0,0,0,0);
+        border: 2px solid rgba(0,0,0,0);
+        border-left: 2px solid rgba(0,0,0,0);
     }
 
     .nav-link-current {
-        border: 3px solid var(--pale-blue);
-        border-left: 3px solid rgba(0,0,0,0);
+        border: 2px solid var(--pale-blue);
+        border-left: 2px solid rgba(0,0,0,0);
     }
 
     nav a:hover {
@@ -280,7 +280,7 @@ nav a:hover,.nav-link-current:hover {
 
     nav a.nav-link-current:hover {
         border-radius: 0 6px 6px 0;
-        border-bottom: 3px solid var(--pale-blue);
+        border-bottom: 2px solid var(--pale-blue);
     }
 
 }
