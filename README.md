@@ -270,10 +270,14 @@ npm i
 ```
 
 Log into MySql in the terminal; enter your MySql password when prompted:
-``` mysql -u root -p ```
+```
+mysql -u root -p
+```
 
 Open the root folder (/window-bookings) in the terminal and run index.js. 
-``` node ```
+```
+node
+```
 
 Run the Create React App script from inside the client folder:
 ```
