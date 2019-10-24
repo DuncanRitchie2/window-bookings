@@ -2,13 +2,13 @@
 
 Bookings system for a window-repair company. My apprenticeship project for Information Catalyst under the tutelage of Code Nation.
 
-<h2>Brief</h2>
+## Brief
 
 Problem-solving exercise for new, above-junior entrants at ICE.
 
 This exercise is intended to be solved within two weeks’ time using all technologies you think are relevant to solve the problem. Its purpose is only to test how you perform in a situation with high-level requirements. At the same time, you’ll get to know some of the technologies we use at ICE. There is no right or wrong answer; there is no good or bad solution; just give it your best shot.
 
-<h3>Problem Context</h3>
+### Problem Context
 
 JWS is a UK company that builds and repairs windows for period properties, from Victorian period to Tudor and related styles in between. Their headquarters and factory are located in Crewe and have two other offices in the Midlands and in South West England. They are currently looking for expansion but their lack of IT support for managing their survey bookings is impeding them reaching their goal.
 
@@ -16,11 +16,11 @@ Currently, customers call JWS to request a quote for new windows or repairing ex
 
 Each surveyor receives their daily schedule of surveys to be undertaken via email the day before. The schedule informs them of the location of each property to visit and customer contact details. Surveyors use their own navigation system (TomTom, Google maps, streetmap, etc.) to go from survey location to survey location. Schedules are done manually at the headquarters. If a customer calls on the booking date to cancel or re arrange the booking, surveyors are not informed of such a change nor prompted to call the headquarters. This translates in time, effort and money being wasted for going to a survey that is not supposed to happen.
 
-<h3>Problem Statement</h3>
+### Problem Statement
 
 JWS wants to create a web-based survey system to improve communication between headquarters – surveyors, and between customers – JWS. Additionally, they want to automate and improve internal processes, which will create efficiencies across the company that will be translated in cost reduction, resource optimisation, increased customer satisfaction, and overall higher revenue.
 
-<h3>User Requirements (in no particular order)</h3>
+### User Requirements (in no particular order)</h3>
 
 The system should allow customers to book surveys online.
 
@@ -44,11 +44,11 @@ Staff at the headquarters would also like to see statistics of surveys including
 
 In order to plan company growth, management would like to see a heatmap of the location of surveys per week or month.
 
-<h3>Your mission</h3>
+### Your mission
 
 Using your preferred development environment, you have two weeks to develop a working prototype of the JWS system on the basis of the information provided above. We do NOT expect that you are able to implement the system in its entirety, but please select the parts of the system that you feel comfortable with. Your implementation should include both front-end and back-end functionalities according to the user requirements. At the end of the exercise, you should be able to demonstrate a working prototype of the parts you developed to other colleagues. Remember that we are not after a pretty system. We are only testing your problem-solving skills in order to know how we can best fit you in our projects, both current and future. Feel free to make any assumptions.
 
-<h2>ICE Technologies</h2>
+## ICE Technologies
 
 This is a non-exhaustive list of technologies we use at ICE. If you know any of them, feel free to show-off your skills (we also want to learn something from you). If you have not used any of them, but always wanted to learn, well this is your chance (as long as it is relevant to your mission). In no particular order:
 
@@ -78,13 +78,13 @@ This is a non-exhaustive list of technologies we use at ICE. If you know any of 
 
 • GitLab
 
-<h2>My approach</h2>
+## My approach
 
 On the first day of the project, I planned it all out &mdash; I decided my tech stack and which features to prioritise. I settled on using a React front-end (using React Router to handle user navigation), an Express.js server, and a MySql database. 
 
 For this kind of project where it&rsquo;s about showing what I know and what I can do in a limited time (ten days), it seemed sensible to stick with what I&rsquo;m familiar with. I know Information Catalyst prefer Angular, but I have no experience with Angular and I&rsquo;m very comfortable with React (excluding React Hooks). (See also: six of my projects on <a href="https://github.com/DuncanRitchie?tab=repositories" title="DuncanRitchie&rsquo;s repositories">my non-apprenticeship account</a>.) I know Information Catalyst prefer Java, and I am getting a lot better acquainted with Java, but I still have more familiarity with Node/Express/JavaScript generally.
 
-<h3>✨ Features I managed to implement</h3>
+### ✨ Features I managed to implement</h3>
 
 The app presents the customer with a booking form, which asks for a customer name, premises address, and survey date. On submission, a new survey is added to the database with the information from the form. If the premises does not match a premises existing in the database, a new premises is created. If the customer does not match a premises existing in the database, a new customer is created. A random surveyor is assigned to the survey. After submitting a booking, the customer is redirected to their list of surveys.
 
@@ -98,7 +98,7 @@ The edit button for each record in the surveyor&rsquo;s view allows the surveyor
 
 After a customer changes a booking or a surveyor changes a survey, they are redirected to their list of surveys.
 
-<h3>🗄️ MySql database</h3>
+### 🗄️ MySql database</h3>
 
 For databases, Information Catalyst like to use MongoDB for non-relational and MySql for relational. I&rsquo;m happy with both &mdash; <a href="https://github.com/DuncanRitchie/velut" title="Code for velut.co.uk on GitHub">my Latin dictionary</a> is a big project of mine using MongoDB &mdash; but this project seemed to need a relational database with several tables linking together, so I used MySql.
 
@@ -114,13 +114,13 @@ The columns for the six tables are as follows. Columns listed italicised in brac
 
 Of course, if this app were actually in use by the surveying company, all the data would be real customers/surveyors/etc. In development, I&rsquo;ve inserted fake data with the following convention &mdash; I used the names of politicians for customers (with contrived contact details), the names of pop stars for surveyors (also with contrived contact details), and famous government buildings for the premises. Thus I could have Hillary Clinton booking Camila Cabello to survey the White House, for instance.
 
-<h3>🚂 Express.js server</h3>
+### 🚂 Express.js server</h3>
 
 The JavaScript (Node) code for the server lives in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/index.js" title="index.js code on GitHub">index.js</a>. Much of it is adapted and extended from the <a href="https://github.com/DuncanRitchie2/reminders" title="Reminders app code on GitHub">reminders app</a> that I built with my Code Nation classmates Tom and Stefan, which was a very useful project for me to get acquainted with using MySql and Express together.
 
 The code for interacting with the database is in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/db.js" title="db.js code on GitHub">db.js</a>. There are fifteen functions in there, though a couple are barely written and the deleteSurvey() function is never used at all.
 
-<h3>⚛️ React front-end</h3>
+### ⚛️ React front-end</h3>
 
 At the moment, React is still my preferred tech for creating user interfaces; I confess I&rsquo;ve never really looked into alternatives, such as Angular, Vue, or non-JavaScript-based options. So I used React for this project, set up with Create React App.
 
@@ -177,17 +177,17 @@ The navbar links to the homepage, /book, /list, and /surveyor. The booking form 
 
 If the user is not logged in as a customer, they see the CustomerLogin component instead of the CustomerList and EditBooking components. Ditto for the surveyor with the SurveyorLogin, SurveyorList, and SurveyForm components.
 
-<h3>💅 CSS</h3>
+### 💅 CSS</h3>
 
 Practically all the CSS is in the <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/App.css" title="App.css code on GitHub">App.css</a> file; some default code from Create React App is still left in index.css, though it&rsquo;s somewhat redundant.
 
 I kept the CSS fairly simple and minimalistic; there are no images in the app, no reasons for sophisticated animations, and no requirements for particular designs in the brief. (There is a little transition on the navbar elements.) If the screen-width is over 560px, table rows are full width and the navbar is all one horizontal row. If the screen-width is 560px or narrower, the navbar becomes a vertical column and the table rows get a CSS Grid layout with the date and address stacking on top of the lat/long, surveyor/customer, and edit button.
 
-<h3>🔓 Security</h3>
+### 🔓 Security</h3>
 
 I have not implemented any real security features, not even passwords. On the front-end, users have to log in as a named customer (through the booking form if they&rsquo;ve not already been added as a customer) in order to read and change their bookings, and surveyors have to sign in with the appropriate name in order to submit their surveys. But it is easy to manipulate the React state and gain access to the survey data, because the user only needs to log in if there is no customer.id or surveyor.id variable in the App component&rsquo;s state.
 
-<h3>🔮 Potential improvements</h3>
+### 🔮 Potential improvements</h3>
 
 Customers wanting to change a booking are currently given a form to change the premises and date, but the premises part doesn&rsquo;t work. (Because the premises_id column in the surveys table is foreign-keyed to the id in the premises table, MySql is not happy with me changing the premises_id to refer to a different premises.) This is probably the most important bug I need to fix.
 
@@ -202,23 +202,61 @@ The brief suggests that customers could be updated on the surveyor&rsquo;s curre
 The brief also suggests generating reports with statistics about the work that different surveyors have done, or maps of the premises locations. This seems quite far beyond "minimum viable product", but it would be an opportunity to use the latitude and longitude columns in the premises table.
 
 
+## 🎞️ Screenshots
 
-<h2>🎞️ Screenshots</h2>
+Click on the image to see the code for the relevant component.
 
-<h3>Homepage</h3>
-![Home](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Home.png)
+### 📱 Mobile view
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyorList/SurveyorList.jsx">
+  <img src="https://www.duncanritchie.co.uk/screenshots/window-survey-bookings-app.png" alt="SurveyorList on mobile">
+</a>
 
-<h3>Booking a survey</h3>
-![Book](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Book.png)
+### 🖥️ Desktop view
 
-<h3>Customer login</h3>
-![CustomerLogin](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/CustomerLogin.png)
+#### Homepage</h4>
 
-<h3>List of a customer&rsquo;s surveys</h3>
-![CustomerList](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/CustomerList.png)
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/Home/Home.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Home.png" alt="Homepage">
+</a>
 
-<h3>Edit a booking as a customer</h3>
-![EditBooking](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/EditBooking.png)
+#### Booking a survey</h4>
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/Book/Book.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Book.png" alt="Booking a survey">
+</a>
 
-<h3>List of a surveyor&rsquo;s surveys</h3>
-![SurveyorList](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/SurveyorList.png)
+#### Customer login</h4>
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/CustomerLogin/CustomerLogin.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/CustomerLogin.png" alt="Customer login">
+</a>
+
+#### List of a customer&rsquo;s surveys</h4>
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/CustomerList/CustomerList.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/CustomerList.png" alt="List of a customer&rsquo;s surveys">
+</a>
+
+#### Edit a booking as a customer</h4>
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/EditBooking/EditBooking.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/EditBooking.png" alt="Edit a booking as a customer">
+</a>
+
+#### Surveyor login</h4>
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyorLogin/SurveyorLogin.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/SurveyorLogin.png" alt="Surveyor login">
+</a>
+
+#### List of a surveyor&rsquo;s surveys</h4>
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyorList/SurveyorList.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/SurveyorList.png" alt="List of a surveyor&rsquo;s surveys">
+</a>
+
+#### Survey form for a surveyor</h4>
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyForm/SurveyForm.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/SurveyForm.png" alt="Survey form for a surveyor">
+</a>
+
+## Installation
+Install MySql (I use a <a href="https://dev.mysql.com/downloads/mysql/" title="Download a community edition of MySql">community edition</a>).
+Run <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/schema.sql" title="Schema.sql code on GitHub">schema.sql</a>.
+Clone this repo.
+Install Node if you don&rsquo;t have it. Open the root folder (/window-bookings) in the terminal and run index.js. ( ``` node ``` )
+
