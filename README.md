@@ -210,7 +210,7 @@ Click on the image to see the code for the relevant component.
 
 ### 📱 Mobile view
 <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyorsList/SurveyorsList.jsx">
-  <img src="https://www.duncanritchie.co.uk/screenshots/window-survey-bookings-app.png" alt="SurveyorsList on mobile">
+  <img src="https://www.duncanritchie.co.uk/screenshots/window-survey-bookings-app.png" alt="SurveyorsList on mobile" width="260" style="width: 90%; max-width: 260px;">
 </a>
 
 ### 🖥️ Desktop view
@@ -218,7 +218,7 @@ Click on the image to see the code for the relevant component.
 #### Homepage
 
 <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/Home/Home.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Home.png" alt="Homepage">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Home.png" alt="Homepage" style="max-width: 90vw;">
 </a>
 
 #### Booking a survey
