@@ -200,3 +200,25 @@ Furthermore, when a surveyor specifies that a premises has whatever number of wi
 The brief suggests that customers could be updated on the surveyor&rsquo;s current location while en route to the premises. This is why I added the lastLatitude and lastLongitude columns to the surveyors table &mdash; were I to implement this feature, I would have the surveyor&rsquo;s device sending the co-ordinates to the database every minute (or on whatever time-interval), and the customer&rsquo;s front-end fetching those co-ordinates at the same frequency.
 
 The brief also suggests generating reports with statistics about the work that different surveyors have done, or maps of the premises locations. This seems quite far beyond "minimum viable product", but it would be an opportunity to use the latitude and longitude columns in the premises table.
+
+
+
+<h2>🎞️ Screenshots</h2>
+
+<h3>Homepage</h3>
+![Home](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Home.png)
+
+<h3>Booking a survey</h3>
+![Book](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Book.png)
+
+<h3>Customer login</h3>
+![CustomerLogin](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/CustomerLogin.png)
+
+<h3>List of a customer&rsquo;s surveys</h3>
+![CustomerList](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/CustomerList.png)
+
+<h3>Edit a booking as a customer</h3>
+![EditBooking](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/EditBooking.png)
+
+<h3>List of a surveyor&rsquo;s surveys</h3>
+![SurveyorList](https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/SurveyorList.png)
