@@ -84,6 +84,20 @@ On the first day of the project, I planned it all out &mdash; I decided my tech 
 
 For this kind of project where it&rsquo;s about showing what I know and what I can do in a limited time (ten days), it seemed sensible to stick with what I&rsquo;m familiar with. I know Information Catalyst prefer Angular, but I have no experience with Angular and I&rsquo;m very comfortable with React (excluding React Hooks). (See also: six of my projects on <a href="https://github.com/DuncanRitchie?tab=repositories" title="DuncanRitchie&rsquo;s repositories">my non-apprenticeship account</a>.) I know Information Catalyst prefer Java, and I am getting a lot better acquainted with Java, but I still have more familiarity with Node/Express/JavaScript generally.
 
+<h3>✨ Features I managed to implement</h3>
+
+The app presents the customer with a booking form, which asks for a customer name, premises address, and survey date. On submission, a new survey is added to the database with the information from the form. If the premises does not match a premises existing in the database, a new premises is created. If the customer does not match a premises existing in the database, a new customer is created. A random surveyor is assigned to the survey. After submitting a booking, the customer is redirected to their list of surveys.
+
+The customer&rsquo;s list of surveys presents the date due, premises address, surveyor name, and an edit button for every booking. If a latitude and longitude is also in the database for a premises, those co-ordinates are given also.
+
+The edit button allows the customer to change the date and time of the booking. (It would also allow the customer to change the premises, but I&rsquo;ve not figured that out yet.)
+
+Surveyors can also log in, and view the surveys they have been assigned to. They get similar information to the customer&rsquo;s view, though with a customer&rsquo;s name instead of a surveyor&rsquo;s. (So customers get a list of the surveyors they&rsquo;re dealing with, and vice versa.)
+
+The edit button for each record in the surveyor&rsquo;s view allows the surveyor to read and change the architectural style for the premises. (It also asks the surveyor for the number of windows, but this is not saved to the database.)
+
+After a customer changes a booking or a surveyor changes a survey, they are redirected to their list of surveys.
+
 <h3>🗄️ MySql database</h3>
 
 For databases, Information Catalyst like to use MongoDB for non-relational and MySql for relational. I&rsquo;m happy with both &mdash; <a href="https://github.com/DuncanRitchie/velut" title="Code for velut.co.uk on GitHub">my Latin dictionary</a> is a big project of mine using MongoDB &mdash; but this project seemed to need a relational database with several tables linking together, so I used MySql.
@@ -113,15 +127,55 @@ At the moment, React is still my preferred tech for creating user interfaces; I 
 I wanted a single-page application because it&rsquo;s easy to pass information between views and cut down on HTTP requests by only loading one HTML file. But I think that users still like to have different URLs mapping to different views &mdash; it gives feedback to the user that they&rsquo;re on a different part of the site, and allows for the browser&rsquo;s back/forward buttons to be used via the HTML5 history API. So I used the <a href="https://reacttraining.com/react-router/" title="React Router&rsquo;s website">React Router</a> module for this purpose.
 
 The routes I have (defined in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/App.js" title="App.js code on GitHub">client/src/App.js</a>) are:
-* / (homepage),
-* /book (form for booking a survey as a new or existing customer),
-* /list (table of all the surveys a customer has booked),
-* /edit/:id (form for a customer to change a booking, where :id is the survey id),
-* /surveyor (table of all the surveys a surveyor has been assigned to),
-* /survey/:id (form for a surveyor to complete a survey, where :id is the survey id).
-* Anything else should give a 404 error page (if not an endpoint for communicating with the back-end).
+
+<table>
+  <thead>
+    <tr>
+      <td><h4>URL</h4></td>
+      <td><h4>React component</h4></td>
+      <td><h4>Description</h4></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/</td>
+      <td>Home</td>
+      <td>homepage</td>
+    </tr>
+    <tr>
+      <td>/book</td>
+      <td>Book</td>
+      <td>form for booking a survey as a new or existing customer</td>
+    </tr>
+    <tr>
+      <td>/list</td>
+      <td>CustomerList</td>
+      <td>table of all the surveys a customer has booked</td>
+    </tr>
+    <tr>
+      <td>/edit/:id</td>
+      <td>EditBooking</td>
+      <td>form for a customer to change a booking, where :id is the survey id</td>
+    </tr>
+    <tr>
+      <td>/surveyor</td>
+      <td>SurveyorList</td>
+      <td>table of all the surveys a surveyor has been assigned to</td>
+    </tr>
+    <tr>
+      <td>/survey/:id</td>
+      <td>SurveyForm</td>
+      <td>form for a surveyor to complete a survey, where :id is the survey id</td>
+    </tr>
+    <tr>
+      <td colspan="3">Anything else should give a 404 error page (if not an endpoint for communicating with the back-end).</td>
+    </tr>
+  </tbody>
+</table>
 
 The navbar links to the homepage, /book, /list, and /surveyor. The booking form redirects to /list after submission. The customer and surveyor tables have a button for each survey linking to the correct /edit/ or /survey/ view to modify or complete that survey.
+
+If the user is not logged in as a customer, they see the CustomerLogin component instead of the CustomerList and EditBooking components. Ditto for the surveyor with the SurveyorLogin, SurveyorList, and SurveyForm components.
 
 <h3>💅 CSS</h3>
 
@@ -131,4 +185,18 @@ I kept the CSS fairly simple and minimalistic; there are no images in the app, n
 
 <h3>🔓 Security</h3>
 
-I have not implemented any real security features, not even passwords. On the front-end, users have to log in as a named customer (through the booking form if they&rsquo;ve not already been added as a customer) in order to read and change their bookings, and surveyors have to sign in with the appropriate name in order to submit their surveys. But it is easy to manipulate the React state and gain access to the survey data, because the log-in components (CustomerLogin) and (SurveyorLogin) only appear if there is no customer.id or surveyor.id variable in the App component&rsquo;s state.
+I have not implemented any real security features, not even passwords. On the front-end, users have to log in as a named customer (through the booking form if they&rsquo;ve not already been added as a customer) in order to read and change their bookings, and surveyors have to sign in with the appropriate name in order to submit their surveys. But it is easy to manipulate the React state and gain access to the survey data, because the user only needs to log in if there is no customer.id or surveyor.id variable in the App component&rsquo;s state.
+
+<h3>🔮 Potential improvements</h3>
+
+Customers wanting to change a booking are currently given a form to change the premises and date, but the premises part doesn&rsquo;t work. (Because the premises_id column in the surveys table is foreign-keyed to the id in the premises table, MySql is not happy with me changing the premises_id to refer to a different premises.) This is probably the most important bug I need to fix.
+
+Customers should also be able to cancel bookings. I would most likely do this by setting the status column in the surveys table to "cancelled", and filtering out "cancelled" surveys in the MySql queries.
+
+On the surveyor&rsquo;s side, submitting a number of windows to a premises does not change the database. This is because the number of windows comes from a count of the number of rows in the windows table with a matching premises_id, so I need to insert rows into the windows table when the surveyor tries to increase the number of windows. (Maybe I&rsquo;ll even need to delete rows when the surveyor decreases the number of windows, but this seems dangerous, and MySql may forbid it because the photos table is foreign-keyed to the windows table.)
+
+Furthermore, when a surveyor specifies that a premises has whatever number of windows, they need to be given input boxes for each window, and the data they input will need to go into the database in the appropriate places. A photograph (or URL thereof) of each window should also be able to be added to the database (in the photos table).
+
+The brief suggests that customers could be updated on the surveyor&rsquo;s current location while en route to the premises. This is why I added the lastLatitude and lastLongitude columns to the surveyors table &mdash; were I to implement this feature, I would have the surveyor&rsquo;s device sending the co-ordinates to the database every minute (or on whatever time-interval), and the customer&rsquo;s front-end fetching those co-ordinates at the same frequency.
+
+The brief also suggests generating reports with statistics about the work that different surveyors have done, or maps of the premises locations. This seems quite far beyond "minimum viable product", but it would be an opportunity to use the latitude and longitude columns in the premises table.
