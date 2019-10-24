@@ -82,8 +82,53 @@ This is a non-exhaustive list of technologies we use at ICE. If you know any of 
 
 On the first day of the project, I planned it all out &mdash; I decided my tech stack and which features to prioritise. I settled on using a React front-end (using React Router to handle user navigation), an Express.js server, and a MySql database. 
 
-For this kind of project where it&rsquo;s about showing what I know and what I can do in a limited time, it seemed sensible to stick with what I&rsquo;m familiar with. I know Information Catalyst prefer Angular, but I have no experience with Angular and I&rsquo;m very comfortable with React (excluding React Hooks). (See also: six of my projects on <a href="https://github.com/DuncanRitchie?tab=repositories" title="DuncanRitchie&rsquo;s repositories">my non-apprenticeship account</a>.) I know Information Catalyst prefer Java, and I am getting a lot better acquainted with Java, but I still have more familiarity with Node/Express/JavaScript generally.
+For this kind of project where it&rsquo;s about showing what I know and what I can do in a limited time (ten days), it seemed sensible to stick with what I&rsquo;m familiar with. I know Information Catalyst prefer Angular, but I have no experience with Angular and I&rsquo;m very comfortable with React (excluding React Hooks). (See also: six of my projects on <a href="https://github.com/DuncanRitchie?tab=repositories" title="DuncanRitchie&rsquo;s repositories">my non-apprenticeship account</a>.) I know Information Catalyst prefer Java, and I am getting a lot better acquainted with Java, but I still have more familiarity with Node/Express/JavaScript generally.
+
+<h3>🗄️ MySql database</h3>
 
 For databases, Information Catalyst like to use MongoDB for non-relational and MySql for relational. I&rsquo;m happy with both &mdash; <a href="https://github.com/DuncanRitchie/velut" title="Code for velut.co.uk on GitHub">my Latin dictionary</a> is a big project of mine using MongoDB &mdash; but this project seemed to need a relational database with several tables linking together, so I used MySql.
 
 I spent three days setting up the database. The six tables I created are customers, surveyors, premises, surveys (which links to the first three tables), windows (which links to premises), and photos (which links to surveys and windows). I knew I wouldn&rsquo;t be able to implement all the features suggested in the brief; nonetheless, I felt I should make the database as comprehensive as possible before writing any HTML or JavaScript, so that I would be able to build whatever front-end and middle-ware I wanted without changing the MySql schemata and potentially dropping and re-creating the database.
+
+The columns for the six tables are as follows. Columns listed italicised in brackets are not read or modified by the application; the photos table did not get used at all.
+* customers: id, firstName, lastName, <i>(phoneNumber, dateJoined)</i>;
+* surveyors: id, firstName, lastName, <i>(phoneNumber, emailAddress, lastLatitude, lastLongitude, dateJoined)</i>;
+* premises: id, houseNumber, houseName, street, town, country, postCode, latitude, longitude, style;
+* surveys: id, customer_id, surveyor_id, premises_id, status, dateToHappen, <i>(dateBooked)</i>;
+* windows: id, premises_id, <i>(description, deleted)</i>;
+* <i>(photos: id, survey_id, window_id, url, dateTaken)</i>.
+
+Of course, if this app were actually in use by the surveying company, all the data would be real customers/surveyors/etc. In development, I&rsquo;ve inserted fake data with the following convention &mdash; I used the names of politicians for customers (with contrived contact details), the names of pop stars for surveyors (also with contrived contact details), and famous government buildings for the premises. Thus I could have Hillary Clinton booking Camila Cabello to survey the White House, for instance.
+
+<h3>🚂 Express.js server</h3>
+
+The JavaScript (Node) code for the server lives in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/index.js" title="index.js code on GitHub">index.js</a>. Much of it is adapted and extended from the <a href="https://github.com/DuncanRitchie2/reminders" title="Reminders app code on GitHub">reminders app</a> that I built with my Code Nation classmates Tom and Stefan, which was a very useful project for me to get acquainted with using MySql and Express together.
+
+The code for interacting with the database is in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/db.js" title="db.js code on GitHub">db.js</a>. There are fifteen functions in there, though a couple are barely written and the deleteSurvey() function is never used at all.
+
+<h3>⚛️ React front-end</h3>
+
+At the moment, React is still my preferred tech for creating user interfaces; I confess I&rsquo;ve never really looked into alternatives, such as Angular, Vue, or non-JavaScript-based options. So I used React for this project, set up with Create React App.
+
+I wanted a single-page application because it&rsquo;s easy to pass information between views and cut down on HTTP requests by only loading one HTML file. But I think that users still like to have different URLs mapping to different views &mdash; it gives feedback to the user that they&rsquo;re on a different part of the site, and allows for the browser&rsquo;s back/forward buttons to be used via the HTML5 history API. So I used the <a href="https://reacttraining.com/react-router/" title="React Router&rsquo;s website">React Router</a> module for this purpose.
+
+The routes I have (defined in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/App.js" title="App.js code on GitHub">client/src/App.js</a>) are:
+* / (homepage),
+* /book (form for booking a survey as a new or existing customer),
+* /list (table of all the surveys a customer has booked),
+* /edit/:id (form for a customer to change a booking, where :id is the survey id),
+* /surveyor (table of all the surveys a surveyor has been assigned to),
+* /survey/:id (form for a surveyor to complete a survey, where :id is the survey id).
+* Anything else should give a 404 error page (if not an endpoint for communicating with the back-end).
+
+The navbar links to the homepage, /book, /list, and /surveyor. The booking form redirects to /list after submission. The customer and surveyor tables have a button for each survey linking to the correct /edit/ or /survey/ view to modify or complete that survey.
+
+<h3>💅 CSS</h3>
+
+Practically all the CSS is in the <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/App.css" title="App.css code on GitHub">App.css</a> file; some default code from Create React App is still left in index.css, though it&rsquo;s somewhat redundant.
+
+I kept the CSS fairly simple and minimalistic; there are no images in the app, no reasons for sophisticated animations, and no requirements for particular designs in the brief. (There is a little transition on the navbar elements.) If the screen-width is over 560px, table rows are full width and the navbar is all one horizontal row. If the screen-width is 560px or narrower, the navbar becomes a vertical column and the table rows get a CSS Grid layout with the date and address stacking on top of the lat/long, surveyor/customer, and edit button.
+
+<h3>🔓 Security</h3>
+
+I have not implemented any real security features, not even passwords. On the front-end, users have to log in as a named customer (through the booking form if they&rsquo;ve not already been added as a customer) in order to read and change their bookings, and surveyors have to sign in with the appropriate name in order to submit their surveys. But it is easy to manipulate the React state and gain access to the survey data, because the log-in components (CustomerLogin) and (SurveyorLogin) only appear if there is no customer.id or surveyor.id variable in the App component&rsquo;s state.
