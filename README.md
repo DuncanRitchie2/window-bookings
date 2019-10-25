@@ -201,7 +201,9 @@ The brief suggests that customers could be updated on the surveyor&rsquo;s curre
 
 The brief also suggests generating reports with statistics about the work that different surveyors have done, or maps of the premises locations. This seems quite far beyond &ldquo;minimum viable product&rdquo;, but it would be an opportunity to use the latitude and longitude columns in the premises table.
 
-More importantly, I&rsquo;ve not deployed this app. If you want to try it out for yourself, you have to follow the installation steps at the end of this readme. 
+More importantly, I&rsquo;ve not deployed this app. If you want to try it out for yourself, you have to follow the installation steps at the end of this readme.
+
+The .env file contains the environment variables I use in development, including my MySql password. In production, this file would never be part of the Git history, and environment variables would be set for different environments (e.g. Heroku) individually.
 
 
 ## 🎞️ Screenshots
