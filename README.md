@@ -86,7 +86,7 @@ For this kind of project where it&rsquo;s about showing what I know and what I c
 
 ### ✨ Features I managed to implement
 
-The app presents the customer with a booking form, which asks for a customer name, premises address, and survey date. On submission, a new survey is added to the database with the information from the form. If the premises does not match a premises existing in the database, a new premises is created. If the customer does not match a premises existing in the database, a new customer is created. A random surveyor is assigned to the survey. After submitting a booking, the customer is redirected to their list of surveys.
+The app presents the customer with a booking form, which asks for a customer name, premises address, and survey date. On submission, a new survey is added to the database with the information from the form. If the premises does not match a premises existing in the database, a new premises record is created. If the customer does not match a customer existing in the database, a new customer record is created. A random surveyor is assigned to the survey. After submitting a booking, the customer is redirected to their list of surveys.
 
 The customer&rsquo;s list of surveys presents the date due, premises address, surveyor name, and an edit button for every booking. If a latitude and longitude is also in the database for a premises, those co-ordinates are given also.
 
