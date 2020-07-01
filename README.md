@@ -116,9 +116,9 @@ Of course, if this app were actually in use by the surveying company, all the da
 
 ### 🚂 Express.js server
 
-The JavaScript (Node) code for the server lives in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/index.js" title="index.js code on GitHub">index.js</a>. Much of it is adapted and extended from the <a href="https://github.com/DuncanRitchie2/reminders" title="Reminders app code on GitHub">reminders app</a> that I built with my Code Nation classmates Tom and Stefan, which was a very useful project for me to get acquainted with using MySql and Express together.
+The JavaScript (Node) code for the server lives in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/index.js" title="index.js code on GitHub">index.js</a>. Much of it is adapted and extended from the <a href="https://github.com/DuncanRitchie2/reminders" title="Reminders app code on GitHub">reminders app</a> that I built with my Code Nation classmates Tom and Stefan, which was a very useful project for me to get acquainted with using MySql and Express together.
 
-The code for interacting with the database is in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/db.js" title="db.js code on GitHub">db.js</a>. There are fifteen functions in there, though a couple are barely written and the deleteSurvey() function is never used at all.
+The code for interacting with the database is in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/db.js" title="db.js code on GitHub">db.js</a>. There are fifteen functions in there, though a couple are barely written and the deleteSurvey() function is never used at all.
 
 ### ⚛️ React front-end
 
@@ -126,7 +126,7 @@ At the moment, React is still my preferred tech for creating user interfaces; I 
 
 I wanted a single-page application because it&rsquo;s easy to pass information between views and cut down on HTTP requests by only loading one HTML file. But I think that users still like to have different URLs mapping to different views &mdash; it gives feedback to the user that they&rsquo;re on a different part of the site, and allows for the browser&rsquo;s back/forward buttons to be used via the HTML5 history API. So I used the <a href="https://reacttraining.com/react-router/" title="React Router&rsquo;s website">React Router</a> module for this purpose.
 
-The routes I have (defined in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/App.js" title="App.js code on GitHub">client/src/App.js</a>) are:
+The routes I have (defined in <a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/App.js" title="App.js code on GitHub">client/src/App.js</a>) are:
 
 <table>
   <thead>
@@ -179,7 +179,7 @@ If the user is not logged in as a customer, they see the CustomerLogin component
 
 ### 💅 CSS
 
-Practically all the CSS is in the <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/App.css" title="App.css code on GitHub">App.css</a> file; some default code from Create React App is still left in index.css, though it&rsquo;s somewhat redundant.
+Practically all the CSS is in the <a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/App.css" title="App.css code on GitHub">App.css</a> file; some default code from Create React App is still left in index.css, though it&rsquo;s somewhat redundant.
 
 I kept the CSS fairly simple and minimalistic; there are no images in the app, no reasons for sophisticated animations, and no requirements for particular designs in the brief. (There is a little transition on the navbar elements.) If the screen-width is over 560px, table rows are full width and the navbar is all one horizontal row. If the screen-width is 560px or narrower, the navbar becomes a vertical column and the table rows get a CSS Grid layout with the date and address stacking on top of the lat/long, surveyor/customer, and edit button.
 
@@ -211,7 +211,7 @@ The .env file contains the environment variables I use in development, including
 Click on the image to see the code for the relevant component.
 
 ### 📱 Mobile view
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyorsList/SurveyorsList.jsx">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/SurveyorsList/SurveyorsList.jsx">
   <img src="https://www.duncanritchie.co.uk/screenshots/window-survey-bookings-app.png" alt="SurveyorsList on mobile" width="260" style="width: 90%; max-width: 260px;">
 </a>
 
@@ -219,49 +219,49 @@ Click on the image to see the code for the relevant component.
 
 #### Homepage
 
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/Home/Home.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Home.png" alt="Homepage" style="max-width: 90vw;">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/Home/Home.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/main/screenshots/Home.png" alt="Homepage" style="max-width: 90vw;">
 </a>
 
 #### Booking a survey
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/Book/Book.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/Book.png" alt="Booking a survey">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/Book/Book.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/main/screenshots/Book.png" alt="Booking a survey">
 </a>
 
 #### Customer login
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/CustomerLogin/CustomerLogin.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/CustomerLogin.png" alt="Customer login">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/CustomerLogin/CustomerLogin.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/main/screenshots/CustomerLogin.png" alt="Customer login">
 </a>
 
 #### List of a customer&rsquo;s surveys
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/CustomersList/CustomersList.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/CustomersList.png" alt="List of a customer&rsquo;s surveys">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/CustomersList/CustomersList.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/main/screenshots/CustomersList.png" alt="List of a customer&rsquo;s surveys">
 </a>
 
 #### Edit a booking as a customer
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/EditBooking/EditBooking.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/EditBooking.png" alt="Edit a booking as a customer">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/EditBooking/EditBooking.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/main/screenshots/EditBooking.png" alt="Edit a booking as a customer">
 </a>
 
 #### Surveyor login
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyorLogin/SurveyorLogin.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/SurveyorLogin.png" alt="Surveyor login">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/SurveyorLogin/SurveyorLogin.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/main/screenshots/SurveyorLogin.png" alt="Surveyor login">
 </a>
 
 #### List of a surveyor&rsquo;s surveys
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyorsList/SurveyorsList.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/SurveyorsList.png" alt="List of a surveyor&rsquo;s surveys">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/SurveyorsList/SurveyorsList.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/main/screenshots/SurveyorsList.png" alt="List of a surveyor&rsquo;s surveys">
 </a>
 
 #### Survey form for a surveyor
-<a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/client/src/components/SurveyForm/SurveyForm.jsx">
-  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/master/screenshots/SurveyForm.png" alt="Survey form for a surveyor">
+<a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/SurveyForm/SurveyForm.jsx">
+  <img src="https://github.com/DuncanRitchie2/window-bookings/blob/main/screenshots/SurveyForm.png" alt="Survey form for a surveyor">
 </a>
 
 ## 🚀 Installation
 Install MySql (I use a <a href="https://dev.mysql.com/downloads/mysql/" title="Download a community edition of MySql">community edition</a>). Start a MySql server running (on a Mac it will be something like System Preferences -> MySql -> Start server).
 
-Run <a href="https://github.com/DuncanRitchie2/window-bookings/blob/master/schema.sql" title="Schema.sql code on GitHub">schema.sql</a>.
+Run <a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/schema.sql" title="Schema.sql code on GitHub">schema.sql</a>.
 
 Install <a title="Node.js" href="https://nodejs.org/en/">Node</a> and <a title="NPM" href="https://www.npmjs.com">Node Package Manager</a> if you don&rsquo;t have them.
 
