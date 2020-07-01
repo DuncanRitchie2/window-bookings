@@ -212,7 +212,7 @@ Click on the image to see the code for the relevant component.
 
 ### 📱 Mobile view
 <a href="https://github.com/DuncanRitchie2/window-bookings/blob/main/client/src/components/SurveyorsList/SurveyorsList.jsx">
-  <img src="https://www.duncanritchie.co.uk/screenshots/window-survey-bookings-app.png" alt="SurveyorsList on mobile" width="260" style="width: 90%; max-width: 260px;">
+  <img src="https://res.cloudinary.com/duncanritchie/image/upload/v1590938855/project-screenshots/window-survey-bookings-app.png" alt="SurveyorsList on mobile" width="260" style="width: 90%; max-width: 260px;">
 </a>
 
 ### 🖥️ Desktop view
