@@ -1,6 +1,6 @@
 # 🏚️🕵️📋 window-bookings
 
-Bookings system for a window-repair company. My apprenticeship project for Information Catalyst under the tutelage of Code Nation.
+Bookings system for a window-repair company. My induction project for Information Catalyst (ICE) under the tutelage of Code Nation.
 
 ## 💼 Brief
 
